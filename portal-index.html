@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Серия мастер‑классов по веб‑технологиям</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2180d9;
+            --secondary: #ff9800;
+            --success: #4caf50;
+            --accent: #9c27b0;
+            --dark: #1a1a1a;
+            --light: #f5f5f5;
+            --text: #333;
+            --text-light: #666;
+            --border: #ddd;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 32px;
+            --radius: 8px;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: var(--spacing-lg) var(--spacing-md);
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-sm);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-lg) var(--spacing-md);
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: var(--spacing-md);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        nav a {
+            color: var(--primary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: var(--light);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Section: About */
+        .about {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .about h2 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.8rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-md);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+        }
+
+        /* Master Classes Grid */
+        .masterclasses {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .mk-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mk-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .mk-card-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: var(--spacing-lg);
+            text-align: center;
+            position: relative;
+        }
+
+        .mk-number {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .mk-card-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .mk-duration {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .mk-card-body {
+            padding: var(--spacing-lg);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mk-content {
+            display: flex;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .mk-icon {
+            font-size: 2.5rem;
+            min-width: 60px;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        .mk-details h4 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mk-details p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .mk-topics {
+            list-style: none;
+            margin: var(--spacing-md) 0;
+        }
+
+        .mk-topics li {
+            padding: 4px 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .mk-topics li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .mk-result {
+            background: linear-gradient(135deg, var(--success) 0%, #66bb6a 100%);
+            color: white;
+            padding: var(--spacing-md);
+            border-radius: var(--radius);
+            margin-top: auto;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .mk-links {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .mk-link {
+            flex: 1;
+            padding: 10px;
+            background: var(--light);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            text-align: center;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .mk-link:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Progress Bar */
+        .progress-section {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .progress-section h2 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .progress-track {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .progress-step {
+            flex: 1;
+            min-width: 60px;
+            height: 40px;
+            background: var(--light);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-light);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--border);
+        }
+
+        .progress-step:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .progress-step.completed {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        /* Resources Section */
+        .resources {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .resources h2 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .resource-card {
+            background: linear-gradient(135deg, var(--light) 0%, #f0f0f0 100%);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            border-color: var(--primary);
+            background: white;
+        }
+
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.1rem;
+        }
+
+        .resource-card a {
+            display: inline-block;
+            color: var(--secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            background: var(--light);
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+            margin-top: var(--spacing-md);
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        footer p {
+            margin: var(--spacing-sm) 0;
+        }
+
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+
+            .masterclasses {
+                grid-template-columns: 1fr;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+
+            nav a {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mk-card {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .mk-card:nth-child(1) { animation-delay: 0.1s; }
+        .mk-card:nth-child(2) { animation-delay: 0.2s; }
+        .mk-card:nth-child(3) { animation-delay: 0.3s; }
+        .mk-card:nth-child(4) { animation-delay: 0.4s; }
+        .mk-card:nth-child(5) { animation-delay: 0.5s; }
+        .mk-card:nth-child(6) { animation-delay: 0.6s; }
+        .mk-card:nth-child(7) { animation-delay: 0.7s; }
+        .mk-card:nth-child(8) { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚀 Серия мастер‑классов по веб‑технологиям</h1>
+        <p>Профориентационная программа для учащихся 8–9 классов</p>
+    </header>
+
+    <div class="container">
+        <!-- Navigation -->
+        <nav>
+            <a href="#about">О программе</a>
+            <a href="#masterclasses">Мастер‑классы</a>
+            <a href="#progress">Прогресс</a>
+            <a href="#resources">Ресурсы</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <h2>📖 О программе</h2>
+            <p>Эта серия из 8 взаимосвязанных мастер‑классов разработана для учащихся 8–9 классов, желающих познакомиться с миром веб‑разработки и профессиями в IT‑сфере.</p>
+            
+            <div class="about-grid">
+                <div class="stat-card">
+                    <h3>8</h3>
+                    <p>Мастер‑классов</p>
+                </div>
+                <div class="stat-card">
+                    <h3>16</h3>
+                    <p>Академических часов</p>
+                </div>
+                <div class="stat-card">
+                    <h3>1</h3>
+                    <p>Готовый веб‑проект</p>
+                </div>
+                <div class="stat-card">
+                    <h3>∞</h3>
+                    <p>Новых навыков</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section id="progress" class="progress-section">
+            <h2>📊 Твой путь обучения</h2>
+            <div class="progress-track">
+                <div class="progress-step completed">1</div>
+                <div class="progress-step">2</div>
+                <div class="progress-step">3</div>
+                <div class="progress-step">4</div>
+                <div class="progress-step">5</div>
+                <div class="progress-step">6</div>
+                <div class="progress-step">7</div>
+                <div class="progress-step">8</div>
+            </div>
+        </section>
+
+        <!-- Master Classes -->
+        <section id="masterclasses">
+            <h2 style="text-align: center; color: var(--primary); margin-bottom: var(--spacing-lg); font-size: 2rem;">🎓 Мастер‑классы</h2>
+            
+            <div class="masterclasses">
+                <!-- Мастер‑класс 1 -->
+                <div class="mk-card">
+                    <div class="mk-card-header">
+                        <div class="mk-number">1️⃣</div>
+                        <h3>Введение в веб‑профессии</h3>
+                        <div class="mk-duration">90 минут</div>
+                    </div>
+                    <div class="mk-card-body">
+                        <div class="mk-content">
+                            <div class="mk-icon">💼</div>
+                            <div class="mk-details">
+                                <h4>Что изучим</h4>
+                                <ul class="mk-topics">
+                                    <li>Обзор IT‑профессий</li>
+                                    <li>Роли в веб‑команде</li>
+                                    <li>Карьерные перспективы</li>
+                                    <li>Профдиагностика</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mk-result">Определи свой IT‑профиль! 🎯</div>
+                        <div class="mk-links">
+                            <a href="mk1-index.html" class="mk-link">📚 Материалы</a>
+                            <a href="mk1-index.html#quiz" class="mk-link">🎯 Тест</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Мастер‑класс 2 -->
+                <div class="mk-card">
+                    <div class="mk-card-header">
+                        <div class="mk-number">2️⃣</div>
+                        <h3>Основы HTML</h3>
+                        <div class="mk-duration">90 минут</div>
+                    </div>
+                    <div class="mk-card-body">
+                        <div class="mk-content">
+                            <div class="mk-icon">&lt;/&gt;</div>
+                            <div class="mk-details">
+                                <h4>Что создадим</h4>
+                                <ul class="mk-topics">
+                                    <li>HTML‑документ</li>
+                                    <li>Базовые теги</li>
+                                    <li>Структура страницы</li>
+                                    <li>Первая визитка!</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mk-result">Твоя первая HTML‑страница 🌐</div>
+                        <div class="mk-links">
+                            <a href="mk2-index.html" class="mk-link">📚 Теория</a>
+                            <a href="mk2-index.html#tasks" class="mk-link">✍️ Задания</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Мастер‑класс 3 -->
+                <div class="mk-card">
+                    <div class="mk-card-header">
+                        <div class="mk-number">3️⃣</div>
+                        <h3>CSS: Стилизация</h3>
+                        <div class="mk-duration">90 минут</div>
+                    </div>
+                    <div class="mk-card-body">
+                        <div class="mk-content">
+                            <div class="mk-icon">🎨</div>
+                            <div class="mk-details">
+                                <h4>Что оформим</h4>
+                                <ul class="mk-topics">
+                                    <li>CSS селекторы</li>
+                                    <li>Цвета и шрифты</li>
+                                    <li>Блочная модель</li>
+                                    <li>Красивая визитка!</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mk-result">Стильная страница 💅</div>
+                        <div class="mk-links">
+                            <a href="mk3-index.html" class="mk-link">🎨 Примеры</a>
+                            <a href="mk3-index.html#tasks" class="mk-link">🖌️ Создай стиль</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Мастер‑класс 4 -->
+                <div class="mk-card">
+                    <div class="mk-card-header">
+                        <div class="mk-number">4️⃣</div>
+                        <h3>JavaScript: Интерактивность</h3>
+                        <div class="mk-duration">90 минут</div>
+                    </div>
+                    <div class="mk-card-body">
+                        <div class="mk-content">
+                            <div class="mk-icon">⚡</div>
+                            <div class="mk-details">
+                                <h4>Что запрограммим</h4>
+                                <ul class="mk-topics">
+                                    <li>Переменные и условия</li>
+                                    <li>Обработчики событий</li>
+                                    <li>Изменение DOM</li>
+                                    <li>Интерактивная визитка!</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mk-result">Живая страница 🎬</div>
+                        <div class="mk-links">
+                            <a href="mk4-index.html" class="mk-link">⚙️ Теория</a>
+                            <a href="mk4-index.html#tasks" class="mk-link">💻 Кодируй</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Мастер‑класс 5 -->
+                <div class="mk-card">
+                    <div class="mk-card-header">
+                        <div class="mk-number">5️⃣</div>
+                        <h3>Адаптивный дизайн</h3>
+                        <div class="mk-duration">90 минут</div>
+                    </div>
+                    <div class="mk-card-body">
+                        <div class="mk-content">
+                            <div class="mk-icon">📱</div>
+                            <div class="mk-details">
+                                <h4>Что адаптируем</h4>
+                                <ul class="mk-topics">
+                                    <li>Viewport и медиазапросы</li>
+                                    <li>Относительные единицы</li>
+                                    <li>Мобильный дизайн</li>
+                                    <li>Тестирование DevTools</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mk-result">Работает везде! 📲</div>
+                        <div class="mk-links">
+                            <a href="mk5-index.html" class="mk-link">📖 Учебник</a>
+                            <a href="mk5-index.html#tasks" class="mk-link">🔧 Адаптируй</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Мастер‑класс 6 -->
+                <div class="mk-card">
+                    <div class="mk-card-header">
+                        <div class="mk-number">6️⃣</div>
+                        <h3>Графические редакторы</h3>
+                        <div class="mk-duration">90 минут</div>
+                    </div>
+                    <div class="mk-card-body">
+                        <div class="mk-content">
+                            <div class="mk-icon">🖼️</div>
+                            <div class="mk-details">
+                                <h4>Что создадим</h4>
+                                <ul class="mk-topics">
+                                    <li>Figma/Canva базы</li>
+                                    <li>Иконки и баннеры</li>
+                                    <li>Цветовые схемы</li>
+                                    <li>UI‑элементы</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mk-result">Красивый UI 🌈</div>
+                        <div class="mk-links">
+                            <a href="mk6-index.html" class="mk-link">🎬 Туториалы</a>
+                            <a href="mk6-index.html#tasks" class="mk-link">✨ Дизайнь</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Мастер‑класс 7 -->
+                <div class="mk-card">
+                    <div class="mk-card-header">
+                        <div class="mk-number">7️⃣</div>
+                        <h3>Публикация в сети</h3>
+                        <div class="mk-duration">90 минут</div>
+                    </div>
+                    <div class="mk-card-body">
+                        <div class="mk-content">
+                            <div class="mk-icon">☁️</div>
+                            <div class="mk-details">
+                                <h4>Что опубликуем</h4>
+                                <ul class="mk-topics">
+                                    <li>GitHub базы</li>
+                                    <li>GitHub Pages</li>
+                                    <li>Домены и хостинг</li>
+                                    <li>Твой URL!</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mk-result">В интернете! 🌍</div>
+                        <div class="mk-links">
+                            <a href="mk7-index.html" class="mk-link">📖 Гайд</a>
+                            <a href="mk7-index.html#tasks" class="mk-link">🚀 Выложи</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Мастер‑класс 8 -->
+                <div class="mk-card">
+                    <div class="mk-card-header">
+                        <div class="mk-number">8️⃣</div>
+                        <h3>Защита проектов</h3>
+                        <div class="mk-duration">90 минут</div>
+                    </div>
+                    <div class="mk-card-body">
+                        <div class="mk-content">
+                            <div class="mk-icon">🏆</div>
+                            <div class="mk-details">
+                                <h4>Что демонстрируем</h4>
+                                <ul class="mk-topics">
+                                    <li>Презентация проекта</li>
+                                    <li>Демонстрация сайта</li>
+                                    <li>Рефлексия опыта</li>
+                                    <li>Сертификат!</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mk-result">Ты – веб‑разработчик! 👨‍💻</div>
+                        <div class="mk-links">
+                            <a href="mk8-index.html" class="mk-link">🎓 Финал</a>
+                            <a href="mk8-index.html#gallery" class="mk-link">🖼️ Галерея</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="resources">
+            <h2>🛠️ Ресурсы и инструменты</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <h3>💻 Редакторы кода</h3>
+                    <p>VS Code, Sublime Text, CodePen</p>
+                    <a href="https://code.visualstudio.com" target="_blank">Перейти →</a>
+                </div>
+                <div class="resource-card">
+                    <h3>🎨 Дизайн инструменты</h3>
+                    <p>Figma, Canva, Adobe XD</p>
+                    <a href="https://figma.com" target="_blank">Перейти →</a>
+                </div>
+                <div class="resource-card">
+                    <h3>📚 Документация</h3>
+                    <p>MDN Web Docs, W3Schools</p>
+                    <a href="https://developer.mozilla.org" target="_blank">Перейти →</a>
+                </div>
+                <div class="resource-card">
+                    <h3>☁️ Хостинг</h3>
+                    <p>GitHub Pages, Netlify, Vercel</p>
+                    <a href="https://github.com" target="_blank">Перейти →</a>
+                </div>
+                <div class="resource-card">
+                    <h3>👥 Сообщества</h3>
+                    <p>Stack Overflow, Dev.to, Reddit</p>
+                    <a href="https://dev.to" target="_blank">Перейти →</a>
+                </div>
+                <div class="resource-card">
+                    <h3>🎓 Курсы</h3>
+                    <p>FreeCodeCamp, Codecademy, Udemy</p>
+                    <a href="https://freecodecamp.org" target="_blank">Перейти →</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer id="contacts">
+        <p><strong>Серия мастер‑классов по веб‑технологиям</strong></p>
+        <p>Профориентационная программа для учащихся 8–9 классов</p>
+        <p>📧 <a href="mailto:info@webmaster-class.ru">info@webmaster-class.ru</a></p>
+        <p style="margin-top: var(--spacing-lg); font-size: 0.9rem; opacity: 0.7;">
+            © 2025 Все права защищены | Создано для школьников, желающих познакомиться с веб‑разработкой
+        </p>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Interactive progress steps
+        document.querySelectorAll('.progress-step').forEach((step, index) => {
+            step.addEventListener('click', function() {
+                console.log(`Переход к мастер‑классу ${index + 1}`);
+                window.location.href = `mk${index + 1}-index.html`;
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.mk-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
