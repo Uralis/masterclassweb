@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мастер‑класс 8: Защита проектов и завершение</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #10b981;
+            --secondary: #059669;
+            --accent: #047857;
+            --success: #34d399;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1a1a1a;
+            --light: #f5f5f5;
+            --text: #333;
+            --text-light: #666;
+            --border: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Tabs */
+        .tabs-nav {
+            display: flex;
+            gap: 0.5rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            position: sticky;
+            top: 20px;
+            z-index: 10;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--border);
+            background: white;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Content */
+        .tab-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-content h3 {
+            color: var(--secondary);
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab-content h4 {
+            color: var(--primary);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Achievement Cards */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .achievement-card {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(16, 185, 129, 0.2);
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-title {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Presentation Cards */
+        .presentation-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .presentation-card {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .presentation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .card-title {
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-content {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-list {
+            list-style: none;
+        }
+
+        .card-list li {
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .card-list li:before {
+            content: "→ ";
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 2rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            width: 1rem;
+            height: 1rem;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .timeline-item:after {
+            content: "";
+            position: absolute;
+            left: 0.99rem;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% + 0.5rem);
+            background: var(--primary);
+        }
+
+        .timeline-item:last-child:after {
+            display: none;
+        }
+
+        .timeline-content {
+            background: white;
+            border-left: 3px solid var(--primary);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .timeline-title {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-desc {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Step Cards */
+        .step-cards {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .step-card {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            margin: 0 0 0.5rem 0;
+        }
+
+        .step-content p {
+            margin: 0;
+            color: var(--text-light);
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .alert-info {
+            background: #d1fae5;
+            border-left-color: var(--primary);
+            color: #047857;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            border-left-color: var(--success);
+            color: #16a34a;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            border-left-color: var(--warning);
+            color: #d97706;
+        }
+
+        /* Tasks */
+        .tasks-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .tasks-section h3 {
+            color: var(--warning);
+            margin-top: 0;
+        }
+
+        .task-item {
+            background: white;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .task-item input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .task-item.checked {
+            opacity: 0.6;
+        }
+
+        .task-item.checked span {
+            text-decoration: line-through;
+        }
+
+        /* Progress */
+        .progress-bar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar h3 {
+            color: var(--primary);
+            margin: 0 0 1rem 0;
+        }
+
+        .progress-track {
+            display: flex;
+            gap: 0.5rem;
+            height: 10px;
+        }
+
+        .progress-item {
+            flex: 1;
+            background: var(--light);
+            border-radius: 4px;
+        }
+
+        .progress-item.active {
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Celebration */
+        .celebration {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 3px solid var(--primary);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .celebration h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin: 0 0 1rem 0;
+        }
+
+        .celebration p {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin: 0.5rem 0;
+        }
+
+        .stars {
+            font-size: 2rem;
+            margin: 1rem 0;
+            animation: twinkle 1s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Checklist */
+        .checklist {
+            background: #f0f4f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            gap: 1rem;
+        }
+
+        .checklist-item input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checklist-item.checked {
+            opacity: 0.6;
+        }
+
+        .checklist-item.checked span {
+            text-decoration: line-through;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎓 Мастер‑класс 8: Защита проектов и завершение</h1>
+        <p>Завершение пути: представь свой проект и получи сертификат!</p>
+    </header>
+
+    <div class="container">
+        <!-- Progress -->
+        <div class="progress-bar">
+            <h3>📊 Твой прогресс в серии — ФИНИШ! 🏁</h3>
+            <div class="progress-track">
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+            </div>
+        </div>
+
+        <!-- Celebration -->
+        <div class="celebration">
+            <div class="stars">⭐✨🌟✨⭐</div>
+            <h2>Поздравляем!</h2>
+            <p>Ты прошёл все 8 мастер‑классов по веб‑технологиям!</p>
+            <p>Теперь пришло время показать свой проект миру!</p>
+            <div class="stars">⭐✨🌟✨⭐</div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" onclick="switchTab('achievements')">🏆 Достижения</button>
+            <button class="tab-btn" onclick="switchTab('presentation')">🎤 Презентация</button>
+            <button class="tab-btn" onclick="switchTab('reflection')">💭 Рефлексия</button>
+            <button class="tab-btn" onclick="switchTab('next')">🚀 Дальше?</button>
+            <button class="tab-btn" onclick="switchTab('tasks')">✍️ Задания</button>
+            <button class="tab-btn" onclick="switchTab('certificate')">🎓 Сертификат</button>
+        </div>
+
+        <!-- ACHIEVEMENTS TAB -->
+        <div id="achievements" class="tab-content active">
+            <h2>🏆 Твои достижения</h2>
+
+            <p>Вот что ты выучил за эти 8 мастер‑классов:</p>
+
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon">🌐</div>
+                    <div class="achievement-title">Веб-сайт</div>
+                    <div class="achievement-desc">Создал полноценный сайт-визитку на HTML, CSS и JavaScript</div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon">📱</div>
+                    <div class="achievement-title">Адаптивность</div>
+                    <div class="achievement-desc">Научился делать сайты красивыми на всех устройствах</div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon">⚡</div>
+                    <div class="achievement-title">Интерактивность</div>
+                    <div class="achievement-desc">Добавил интерактивные элементы с JavaScript</div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon">🎨</div>
+                    <div class="achievement-title">Дизайн</div>
+                    <div class="achievement-desc">Создал макеты в Figma и понимаю принципы дизайна</div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon">🌍</div>
+                    <div class="achievement-title">Публикация</div>
+                    <div class="achievement-desc">Опубликовал сайт в интернет через GitHub Pages</div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon">💼</div>
+                    <div class="achievement-title">Портфолио</div>
+                    <div class="achievement-desc">Построил портфолио для будущей карьеры в IT</div>
+                </div>
+            </div>
+
+            <div class="alert alert-success">
+                ✅ <strong>Итого:</strong> Ты — начинающий веб-разработчик, готовый к новым вызовам!
+            </div>
+        </div>
+
+        <!-- PRESENTATION TAB -->
+        <div id="presentation" class="tab-content">
+            <h2>🎤 Как защищать проект?</h2>
+
+            <p>Защита проекта — это возможность показать то, что ты создал, и объяснить как это работает.</p>
+
+            <h3>Структура защиты (5-7 минут)</h3>
+
+            <div class="step-cards">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Представление (1 минута)</h4>
+                        <p>"Привет, я [имя]. Я создал сайт-визитку, где рассказываю о себе"</p>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Демонстрация (3-4 минуты)</h4>
+                        <p>Открой сайт в браузере, покажи все разделы, интерактивные элементы</p>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Технический рассказ (1-2 минуты)</h4>
+                        <p>"Я использовал HTML для структуры, CSS для стиля, JavaScript для интерактивности"</p>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Вопросы и ответы (1 минута)</h4>
+                        <p>Ответь на вопросы аудитории о том, как работает твой сайт</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Советы для успешной защиты</h3>
+
+            <div class="presentation-cards">
+                <div class="presentation-card">
+                    <div class="card-title">🎯 Подготовка</div>
+                    <ul class="card-list">
+                        <li>Репетируй несколько раз</li>
+                        <li>Проверь, что сайт открывается</li>
+                        <li>Приготовь примеры для показа</li>
+                    </ul>
+                </div>
+
+                <div class="presentation-card">
+                    <div class="card-title">📱 Техника</div>
+                    <ul class="card-list">
+                        <li>Используй большой экран/проектор</li>
+                        <li>Проверь интернет соединение</li>
+                        <li>Отключи уведомления на ПК</li>
+                    </ul>
+                </div>
+
+                <div class="presentation-card">
+                    <div class="card-title">👥 Поведение</div>
+                    <ul class="card-list">
+                        <li>Говори чётко и не торопись</li>
+                        <li>Смотри на аудиторию</li>
+                        <li>Улыбайся! Ты молод(а) и уверен(а)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Примеры вопросов и ответов</h3>
+
+            <div class="presentation-card" style="margin-top: 1.5rem;">
+                <div class="card-title">Q: Как ты создал этот сайт?</div>
+                <div class="card-content">
+                    A: "Я использовал HTML для создания структуры (заголовки, текст, кнопки), CSS для оформления (цвета, шрифты, выравнивание), и JavaScript для интерактивности (кнопки, показ/скрытие текста)"
+                </div>
+            </div>
+
+            <div class="presentation-card">
+                <div class="card-title">Q: Какие инструменты ты использовал?</div>
+                <div class="card-content">
+                    A: "Я писал код в Visual Studio Code, создавал макет в Figma, проверял адаптивность в DevTools браузера, и опубликовал на GitHub Pages"
+                </div>
+            </div>
+
+            <div class="presentation-card">
+                <div class="card-title">Q: Что было сложнее всего?</div>
+                <div class="card-content">
+                    A: "Самое сложное было разобраться с адаптивностью — сделать так, чтобы сайт выглядел хорошо и на мобильном, и на компьютере. Но после практики я понял(а) медиазапросы и flexbox"
+                </div>
+            </div>
+        </div>
+
+        <!-- REFLECTION TAB -->
+        <div id="reflection" class="tab-content">
+            <h2>💭 Рефлексия: что ты выучил(а)?</h2>
+
+            <p>Важно не просто пройти мастер‑классы, но и осознать, что ты выучил(а). Ответь на эти вопросы:</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-title">1. Какой мастер‑класс был самым интересным?</div>
+                        <div class="timeline-desc">Подумай, какой мастер‑класс тебе понравился больше всего и почему. Может быть, JavaScript? Или дизайн в Figma?</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-title">2. Какой мастер‑класс был самым сложным?</div>
+                        <div class="timeline-desc">Вспомни, где ты столкнулся(ась) с трудностями. Это нормально! Все начинают с нуля.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-title">3. Что ты можешь создать уже сейчас?</div>
+                        <div class="timeline-desc">Перечисли навыки: могу писать HTML, стилизовать CSS, добавлять JavaScript, делать адаптивный дизайн, работать в Figma, опубликовать сайт</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-title">4. Что ты хочешь выучить дальше?</div>
+                        <div class="timeline-desc">Может быть, фреймворки (React, Vue)? Backend? Или углубиться в дизайн? Выбери направление!</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-title">5. Как изменился(ась) твой взгляд на IT?</div>
+                        <div class="timeline-desc">Теперь ты понимаешь, как создаются сайты. Это уже хороший результат! Может быть, это станет твоей карьерой?</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                💡 <strong>Совет:</strong> Запиши свои ответы в отдельный документ. Это твой личный прогресс!
+            </div>
+        </div>
+
+        <!-- NEXT TAB -->
+        <div id="next" class="tab-content">
+            <h2>🚀 Что дальше?</h2>
+
+            <p>Ты закончил серию мастер‑классов, но это только начало! Вот предложения для дальнейшего развития:</p>
+
+            <h3>Направление 1: Frontend разработка</h3>
+
+            <div class="presentation-cards">
+                <div class="presentation-card">
+                    <div class="card-title">📚 Следующие навыки</div>
+                    <ul class="card-list">
+                        <li>React или Vue (JavaScript фреймворки)</li>
+                        <li>Препроцессоры CSS (SASS, LESS)</li>
+                        <li>Git и GitHub для версионирования</li>
+                        <li>API и работа с серверами</li>
+                    </ul>
+                </div>
+
+                <div class="presentation-card">
+                    <div class="card-title">🎓 Ресурсы</div>
+                    <ul class="card-list">
+                        <li>JavaScript.info (бесплатный курс)</li>
+                        <li>Codecademy (интерактивные уроки)</li>
+                        <li>YouTube каналы по программированию</li>
+                        <li>Документация MDN Web Docs</li>
+                    </ul>
+                </div>
+
+                <div class="presentation-card">
+                    <div class="card-title">💼 Карьера</div>
+                    <ul class="card-list">
+                        <li>Junior Frontend Developer</li>
+                        <li>$500-1500/месяц на старте</li>
+                        <li>Удалённая работа в IT компаниях</li>
+                        <li>Стажировка → Junior → Middle → Senior</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Направление 2: Web дизайн</h3>
+
+            <div class="presentation-cards">
+                <div class="presentation-card">
+                    <div class="card-title">🎨 Следующие навыки</div>
+                    <ul class="card-list">
+                        <li>Advanced Figma (компоненты, варианты)</li>
+                        <li>UX исследования и тестирование</li>
+                        <li>Прототипирование и анимация</li>
+                        <li>Дизайн-системы</li>
+                    </ul>
+                </div>
+
+                <div class="presentation-card">
+                    <div class="card-title">🎓 Ресурсы</div>
+                    <ul class="card-list">
+                        <li>Figma tutorials (официальные)</li>
+                        <li>Design courses на Skillshare</li>
+                        <li>Dribbble (вдохновение и примеры)</li>
+                        <li>Behance портфолио</li>
+                    </ul>
+                </div>
+
+                <div class="presentation-card">
+                    <div class="card-title">💼 Карьера</div>
+                    <ul class="card-list">
+                        <li>UI/UX Designer</li>
+                        <li>$600-1800/месяц на старте</li>
+                        <li>Работа в стартапах и IT компаниях</li>
+                        <li>Фриланс возможности</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Направление 3: Full Stack</h3>
+
+            <div class="alert alert-success">
+                ✅ <strong>Лучший выбор для кареры:</strong> Выучи Frontend + Backend = Full Stack разработчик. Это самая высокооплачиваемая специальность ($1500-3000+/месяц)
+            </div>
+        </div>
+
+        <!-- TASKS TAB -->
+        <div id="tasks" class="tab-content">
+            <h2>✍️ Финальные задания</h2>
+
+            <div class="tasks-section">
+                <h3>📝 Что нужно сделать на этом мастер‑классе</h3>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 1:</strong> Создай слайды для презентации своего проекта (Google Slides, PowerPoint или просто документ)</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 2:</strong> Напиши 2-3 главных момента о своём проекте (чему научился, сложности, результат)</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 3:</strong> Репетируй защиту проекта минимум 3 раза</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 4:</strong> Проверь, что все ссылки на сайте работают и ничего не сломано</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 5:</strong> Создай README.md файл в GitHub репозитории с описанием проекта</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 6:</strong> Запиши видео-демонстрацию своего сайта (опционально, но полезно для портфолио)</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Финальное задание:</strong> Защити свой проект перед педагогом/друзьями/семьей</span>
+                </div>
+            </div>
+
+            <div class="alert alert-success">
+                ✅ <strong>Результат:</strong> Полнофункциональный сайт, успешная защита и готовность к новым вызовам!
+            </div>
+        </div>
+
+        <!-- CERTIFICATE TAB -->
+        <div id="certificate" class="tab-content">
+            <h2>🎓 Сертификат завершения</h2>
+
+            <p>Поздравляем! Ты завершил полную серию из 8 мастер‑классов по веб‑технологиям!</p>
+
+            <div style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border: 3px solid var(--primary); border-radius: 12px; padding: 2rem; text-align: center; margin: 2rem 0; font-family: Georgia, serif;">
+                <div style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 1rem;">─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</div>
+                
+                <h2 style="margin: 1rem 0; color: var(--primary);">🎓 СЕРТИФИКАТ</h2>
+                
+                <p style="font-size: 1.1rem; color: var(--text); margin: 1rem 0;">Этим удостоверяется, что</p>
+                
+                <p style="font-size: 1.4rem; font-weight: bold; color: var(--primary); margin: 1rem 0;">
+                    [ТВоё ИМЯ]
+                </p>
+                
+                <p style="font-size: 1.1rem; color: var(--text); margin: 1rem 0;">успешно завершил(а) серию</p>
+                
+                <p style="font-size: 1.2rem; font-weight: bold; color: var(--secondary); margin: 1rem 0;">
+                    "8 Мастер‑классов по Веб‑технологиям"
+                </p>
+                
+                <p style="font-size: 0.95rem; color: var(--text-light); margin: 1rem 0; line-height: 1.8;">
+                    Изучил(а) основы HTML, CSS, JavaScript<br>
+                    Создал(а) адаптивный сайт<br>
+                    Опубликовал(а) проект в интернет<br>
+                    Готов(а) к новым вызовам в IT!
+                </p>
+                
+                <p style="font-size: 0.9rem; color: var(--text); margin: 2rem 0;">
+                    Дата: <strong>декабрь 2025</strong>
+                </p>
+                
+                <div style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 1rem;">─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</div>
+            </div>
+
+            <div class="alert alert-success">
+                ✅ <strong>Поздравляем снова!</strong> Ты стоишь на пороге великих возможностей. Вперёд, в IT индустрию! 🚀
+            </div>
+
+            <h3>Как использовать сертификат?</h3>
+
+            <div class="presentation-cards">
+                <div class="presentation-card">
+                    <div class="card-title">📱 LinkedIn</div>
+                    <div class="card-content">Загрузи фото сертификата в "Licenses & Certifications"</div>
+                </div>
+
+                <div class="presentation-card">
+                    <div class="card-title">📄 Резюме</div>
+                    <div class="card-content">Добавь в раздел "Образование" или "Курсы"</div>
+                </div>
+
+                <div class="presentation-card">
+                    <div class="card-title">🎯 Портфолио</div>
+                    <div class="card-content">Поделись сертификатом на своём сайте</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-buttons">
+            <a href="mk7-index.html" class="btn btn-primary">⬅️ Назад: мастер‑класс 7 Публикация</a>
+            <a href="portal-index.html" class="btn btn-primary">🏠 На портал</a>
+            <a href="#" class="btn btn-success">🎓 Получить сертификат</a>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Мастер‑класс 8: Защита проектов и завершение</strong></p>
+        <p>© 2025 Серия мастер‑классов по веб‑технологиям</p>
+        <p>Спасибо за внимание и удачи в IT карьере! 🚀</p>
+        <p><a href="portal-index.html">Вернуться на портал</a></p>
+    </footer>
+
+    <script>
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Tasks
+        document.querySelectorAll('.task-check').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                this.parentElement.classList.toggle('checked');
+            });
+        });
+    </script>
+</body>
+</html>

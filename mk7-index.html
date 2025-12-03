@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мастер‑класс 7: Публикация в сети</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #06b6d4;
+            --secondary: #0891b2;
+            --accent: #0e7490;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1a1a1a;
+            --light: #f5f5f5;
+            --text: #333;
+            --text-light: #666;
+            --border: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, #cffafe 0%, #a5f3fc 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0e7490 0%, #155e75 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Tabs */
+        .tabs-nav {
+            display: flex;
+            gap: 0.5rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            position: sticky;
+            top: 20px;
+            z-index: 10;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--border);
+            background: white;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Content */
+        .tab-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-content h3 {
+            color: var(--secondary);
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab-content h4 {
+            color: var(--primary);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Option Cards */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .option-card {
+            background: linear-gradient(135deg, #cffafe 0%, #a5f3fc 100%);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(6, 182, 212, 0.2);
+        }
+
+        .option-title {
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .option-desc {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .option-features {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .feature-item {
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .feature-item:before {
+            content: "✓ ";
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .pro-badge {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            font-weight: bold;
+        }
+
+        /* Steps */
+        .step-guide {
+            background: linear-gradient(135deg, #cffafe 0%, #a5f3fc 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .step {
+            background: white;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .step-num {
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            margin: 0 0 0.5rem 0;
+        }
+
+        .step-content p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #f5f5f5;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #c92c2c;
+            line-height: 1.4;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid var(--border);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--light);
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .alert-info {
+            background: #e0f2fe;
+            border-left-color: var(--primary);
+            color: #0369a1;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            border-left-color: var(--success);
+            color: #059669;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            border-left-color: var(--warning);
+            color: #d97706;
+        }
+
+        /* Tasks */
+        .tasks-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .tasks-section h3 {
+            color: var(--warning);
+            margin-top: 0;
+        }
+
+        .task-item {
+            background: white;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .task-item input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .task-item.checked {
+            opacity: 0.6;
+        }
+
+        .task-item.checked span {
+            text-decoration: line-through;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar h3 {
+            color: var(--primary);
+            margin: 0 0 1rem 0;
+        }
+
+        .progress-track {
+            display: flex;
+            gap: 0.5rem;
+            height: 8px;
+        }
+
+        .progress-item {
+            flex: 1;
+            background: var(--light);
+            border-radius: 4px;
+        }
+
+        .progress-item.active {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Checklist */
+        .checklist {
+            background: #f0f4f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            gap: 1rem;
+        }
+
+        .checklist-item input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checklist-item.checked {
+            opacity: 0.6;
+        }
+
+        .checklist-item.checked span {
+            text-decoration: line-through;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌐 Мастер‑класс 7: Публикация в сети</h1>
+        <p>Опубликуй свой первый сайт в интернет!</p>
+    </header>
+
+    <div class="container">
+        <!-- Progress -->
+        <div class="progress-bar">
+            <h3>📊 Твой прогресс в серии</h3>
+            <div class="progress-track">
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item"></div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" onclick="switchTab('overview')">🎯 Обзор</button>
+            <button class="tab-btn" onclick="switchTab('hosting')">🏢 Хостинг</button>
+            <button class="tab-btn" onclick="switchTab('github')">⭐ GitHub Pages</button>
+            <button class="tab-btn" onclick="switchTab('domain')">🌐 Домен</button>
+            <button class="tab-btn" onclick="switchTab('tutorial')">📚 Гайд</button>
+            <button class="tab-btn" onclick="switchTab('tasks')">✍️ Задания</button>
+            <button class="tab-btn" onclick="switchTab('checklist')">✅ Чек-лист</button>
+        </div>
+
+        <!-- OVERVIEW TAB -->
+        <div id="overview" class="tab-content active">
+            <h2>🎯 Как опубликовать сайт?</h2>
+
+            <p>Чтобы ваш сайт был доступен всем в интернете, нужно выполнить несколько шагов:</p>
+
+            <h3>Что нужно для публикации?</h3>
+
+            <div class="options-grid">
+                <div class="option-card">
+                    <div class="option-title">🏢 Хостинг</div>
+                    <div class="option-desc">Сервер, где "живёт" ваш сайт</div>
+                    <div class="option-features">
+                        <div class="feature-item">Хранит файлы сайта</div>
+                        <div class="feature-item">Работает 24/7</div>
+                        <div class="feature-item">Быстро передаёт данные</div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-title">🌐 Домен</div>
+                    <div class="option-desc">Адрес вашего сайта (мой-сайт.ru)</div>
+                    <div class="option-features">
+                        <div class="feature-item">Легче запомнить</div>
+                        <div class="feature-item">Профессиональный вид</div>
+                        <div class="feature-item">Уникальный адрес</div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-title">📝 Файлы сайта</div>
+                    <div class="option-desc">HTML, CSS, JS, картинки</div>
+                    <div class="option-features">
+                        <div class="feature-item">Загружаешь на хостинг</div>
+                        <div class="feature-item">Через FTP или панель управления</div>
+                        <div class="feature-item">Синхронизируется с публичным адресом</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                💡 <strong>Хорошая новость:</strong> Для начинающих есть бесплатные варианты! GitHub Pages даёт 1 сайт совершенно бесплатно.
+            </div>
+
+            <h3>Этапы публикации</h3>
+
+            <div class="step-guide">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h4>Выбрать хостинг</h4>
+                        <p>Решить, будешь использовать платный хостинг или бесплатный GitHub Pages</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h4>Подготовить файлы</h4>
+                        <p>Убедиться, что все файлы готовы (index.html, style.css, script.js)</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h4>Загрузить файлы</h4>
+                        <p>Залить файлы на хостинг через FTP или панель управления</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <h4>Проверить доступ</h4>
+                        <p>Открыть сайт в браузере и убедиться, что всё работает</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">5</div>
+                    <div class="step-content">
+                        <h4>Оптимизировать</h4>
+                        <p>Улучшить скорость, SEO, мобильность</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HOSTING TAB -->
+        <div id="hosting" class="tab-content">
+            <h2>🏢 Варианты хостинга</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Хостинг</th>
+                    <th>Цена</th>
+                    <th>Простота</th>
+                    <th>Для кого?</th>
+                </tr>
+                <tr>
+                    <td><strong>GitHub Pages</strong></td>
+                    <td>Бесплатно</td>
+                    <td>Простая</td>
+                    <td>Начинающие</td>
+                </tr>
+                <tr>
+                    <td><strong>Netlify</strong></td>
+                    <td>Бесплатно / $11+</td>
+                    <td>Очень простая</td>
+                    <td>Начинающие-Профи</td>
+                </tr>
+                <tr>
+                    <td><strong>Vercel</strong></td>
+                    <td>Бесплатно / $20+</td>
+                    <td>Очень простая</td>
+                    <td>Разработчики</td>
+                </tr>
+                <tr>
+                    <td><strong>Beget / Timeweb</strong></td>
+                    <td>$1-5/месяц</td>
+                    <td>Средняя</td>
+                    <td>Русскоязычные</td>
+                </tr>
+                <tr>
+                    <td><strong>Bluehost / GoDaddy</strong></td>
+                    <td>$2-10/месяц</td>
+                    <td>Средняя</td>
+                    <td>Универсальные</td>
+                </tr>
+                <tr>
+                    <td><strong>AWS / Google Cloud</strong></td>
+                    <td>Переменная</td>
+                    <td>Сложная</td>
+                    <td>Профессионалы</td>
+                </tr>
+            </table>
+
+            <h3>Бесплатные хостинги для начинающих</h3>
+
+            <div class="options-grid">
+                <div class="option-card">
+                    <div class="option-title">GitHub Pages</div>
+                    <div class="option-desc">Встроен в GitHub, идеален для статичных сайтов</div>
+                    <div class="option-features">
+                        <div class="feature-item">Абсолютно бесплатно</div>
+                        <div class="feature-item">GitHub Pages.io адрес</div>
+                        <div class="feature-item">Git версионирование</div>
+                        <div class="pro-badge">РЕКОМЕНДУЕТСЯ ДЛЯ НОВИЧКОВ</div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-title">Netlify</div>
+                    <div class="option-desc">Простая загрузка через веб-интерфейс</div>
+                    <div class="option-features">
+                        <div class="feature-item">Бесплатный план</div>
+                        <div class="feature-item">Перетаскивание файлов</div>
+                        <div class="feature-item">HTTPS по умолчанию</div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-title">Firebase Hosting</div>
+                    <div class="option-desc">От Google, для статичных сайтов</div>
+                    <div class="option-features">
+                        <div class="feature-item">Бесплатный уровень</div>
+                        <div class="feature-item">Быстрая работа</div>
+                        <div class="feature-item">CLI инструменты</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GITHUB TAB -->
+        <div id="github" class="tab-content">
+            <h2>⭐ GitHub Pages: Полный гайд</h2>
+
+            <p><strong>GitHub Pages</strong> — это самый простой способ опубликовать свой первый сайт абсолютно бесплатно!</p>
+
+            <div class="alert alert-success">
+                ✅ <strong>Преимущества:</strong> Бесплатно, просто, безопасно, работает 24/7
+            </div>
+
+            <h3>Шаг за шагом</h3>
+
+            <div class="step-guide">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h4>Создай GitHub аккаунт</h4>
+                        <p>Перейди на github.com и зарегистрируйся (если ещё нет)</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h4>Создай новый репозиторий</h4>
+                        <p>Нажми + на GitHub, выбери "New repository". Название должно быть: <strong>username.github.io</strong> (вместо username твой логин)</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h4>Добавь файлы</h4>
+                        <p>Загрузи все файлы (index.html, style.css, script.js, картинки) в репозиторий через веб-интерфейс</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <h4>Включи GitHub Pages</h4>
+                        <p>Settings → Pages → Branch: main → Save</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">5</div>
+                    <div class="step-content">
+                        <h4>Подожди минуту</h4>
+                        <p>GitHub опубликует сайт. Адрес: https://username.github.io</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">6</div>
+                    <div class="step-content">
+                        <h4>Проверь результат!</h4>
+                        <p>Открой браузер и перейди по адресу username.github.io</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Обновление сайта</h3>
+
+            <p>Если ты изменил файлы, нужно их снова загрузить:</p>
+
+            <div class="code-block">
+1. В репозитории нажми на файл (например, index.html)
+2. Нажми на карандаш (Edit)
+3. Внеси изменения
+4. Нажми "Commit changes"
+5. Дождись обновления (обычно 1-2 минуты)
+            </div>
+
+            <div class="alert alert-info">
+                💡 <strong>Совет:</strong> Можешь использовать Git через командную строку для более быстрого обновления. Изучи git push позже!
+            </div>
+        </div>
+
+        <!-- DOMAIN TAB -->
+        <div id="domain" class="tab-content">
+            <h2>🌐 Свой домен</h2>
+
+            <p>Если хочешь свой адрес вместо username.github.io, нужен собственный домен.</p>
+
+            <h3>Как работает домен?</h3>
+
+            <div class="options-grid">
+                <div class="option-card">
+                    <div class="option-title">DNS</div>
+                    <div class="option-desc">Система имён, превращающая мой-сайт.ru в IP адрес</div>
+                    <div class="option-features">
+                        <div class="feature-item">Как телефонный справочник</div>
+                        <div class="feature-item">Указывает на хостинг</div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-title">Регистратор домена</div>
+                    <div class="option-desc">Компания, продающая домены (Namecheap, REG.RU и т.д.)</div>
+                    <div class="option-features">
+                        <div class="feature-item">Зарегистрируешь домен</div>
+                        <div class="feature-item">Платишь ежегодно ($5-15)</div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-title">Подключение</div>
+                    <div class="option-desc">Связываешь домен с хостингом через DNS</div>
+                    <div class="option-features">
+                        <div class="feature-item">Обновляешь NS записи</div>
+                        <div class="feature-item">Ждёшь 24-48 часов</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Популярные регистраторы доменов</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Регистратор</th>
+                    <th>Цена</th>
+                    <th>Регионы</th>
+                    <th>Поддержка</th>
+                </tr>
+                <tr>
+                    <td>Namecheap</td>
+                    <td>$0.88-12 (первый год)</td>
+                    <td>Все TLD</td>
+                    <td>Английская</td>
+                </tr>
+                <tr>
+                    <td>REG.RU</td>
+                    <td>49-999 ₽</td>
+                    <td>Русские, COM, RU</td>
+                    <td>Русская ✅</td>
+                </tr>
+                <tr>
+                    <td>GoDaddy</td>
+                    <td>$0.99-16</td>
+                    <td>Все TLD</td>
+                    <td>Английская</td>
+                </tr>
+                <tr>
+                    <td>Яндекс.Домены</td>
+                    <td>500-1000 ₽</td>
+                    <td>RU, РФ и другие</td>
+                    <td>Русская ✅</td>
+                </tr>
+            </table>
+
+            <h3>Подключение домена к GitHub Pages</h3>
+
+            <div class="step-guide">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h4>Зарегистрируй домен</h4>
+                        <p>На регистраторе выбери домен (например, мой-сайт.ru) и зарегистрируй его</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h4>Найди NS записи GitHub</h4>
+                        <p>В GitHub Settings → Pages, ищи информацию о DNS</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h4>Обнови DNS у регистратора</h4>
+                        <p>В панели управления регистратора найди DNS и замени на GitHub NS</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <h4>Подожди 24-48 часов</h4>
+                        <p>DNS может обновляться медленно, будь терпелив</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">5</div>
+                    <div class="step-content">
+                        <h4>Проверь результат!</h4>
+                        <p>Открой браузер и перейди по мой-сайт.ru</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TUTORIAL TAB -->
+        <div id="tutorial" class="tab-content">
+            <h2>📚 Полный туториал: Опубликуй свой сайт за 10 минут</h2>
+
+            <h3>Предварительно требуется:</h3>
+            <ul style="margin: 1rem 0 1rem 2rem; color: var(--text-light);">
+                <li>GitHub аккаунт (зарегистрируйся на github.com)</li>
+                <li>Готовый сайт с файлами index.html, style.css, script.js</li>
+                <li>Все файлы в одной папке</li>
+            </ul>
+
+            <h3>Видео-гайд альтернативно:</h3>
+            <div class="alert alert-info">
+                💡 Ищи на YouTube: "GitHub Pages Tutorial for Beginners" или "Как загрузить сайт на GitHub Pages"
+            </div>
+
+            <div class="step-guide">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h4>Создай репозиторий</h4>
+                        <p><strong>Адрес:</strong> github.com/new</p>
+                        <p><strong>Название:</strong> YOUR_USERNAME.github.io (заменить YOUR_USERNAME на твой логин)</p>
+                        <p><strong>Описание:</strong> "Мой первый сайт"</p>
+                        <p><strong>Видимость:</strong> Public</p>
+                        <p>Нажми "Create repository"</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h4>Загрузи файлы</h4>
+                        <p>В репозитории нажми "Add file" → "Upload files"</p>
+                        <p>Выбери все файлы своего сайта (index.html, style.css, script.js, папку с картинками)</p>
+                        <p>Нажми "Commit changes"</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h4>Включи GitHub Pages</h4>
+                        <p>Settings (вкладка в репозитории) → Pages</p>
+                        <p>Branch: main</p>
+                        <p>Folder: / (root)</p>
+                        <p>Нажми Save</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <h4>Получи адрес</h4>
+                        <p>После сохранения появится сообщение:</p>
+                        <p><strong>"Your site is live at https://YOUR_USERNAME.github.io"</strong></p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num">5</div>
+                    <div class="step-content">
+                        <h4>Проверь сайт</h4>
+                        <p>Открой браузер и перейди на https://YOUR_USERNAME.github.io</p>
+                        <p>Готово! 🎉 Твой сайт в интернете!</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Что дальше?</h3>
+
+            <div class="alert alert-success">
+                ✅ Твой сайт доступен всему миру! Поделись ссылкой с друзьями и семьей.
+            </div>
+
+            <p><strong>Прогресс:</strong></p>
+            <ul style="margin: 1rem 0 1rem 2rem; color: var(--text-light);">
+                <li>✅ HTML + CSS + JavaScript готовы</li>
+                <li>✅ Адаптивный дизайн работает</li>
+                <li>✅ Сайт опубликован в интернете</li>
+                <li>⭕ Следующее: улучшение, маркетинг, SEO</li>
+            </ul>
+        </div>
+
+        <!-- TASKS TAB -->
+        <div id="tasks" class="tab-content">
+            <h2>✍️ Практические задания</h2>
+
+            <div class="tasks-section">
+                <h3>📝 Твои задачи на этом мастер‑классе</h3>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 1:</strong> Убедись, что все файлы сайта готовы (index.html, style.css, script.js)</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 2:</strong> Создай GitHub аккаунт если ещё нет</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 3:</strong> Создай репозиторий с именем USERNAME.github.io</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 4:</strong> Загрузи все файлы своего сайта в репозиторий</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 5:</strong> Включи GitHub Pages в Settings</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Задание 6:</strong> Открой свой сайт по адресу USERNAME.github.io и проверь что всё работает</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-check">
+                    <span><strong>Финальное задание:</strong> Поделись ссылкой на свой сайт с друзьями и семьей!</span>
+                </div>
+            </div>
+
+            <div class="alert alert-success">
+                ✅ <strong>Результат:</strong> Публичный сайт в интернете, доступный всем по адресу USERNAME.github.io!
+            </div>
+        </div>
+
+        <!-- CHECKLIST TAB -->
+        <div id="checklist" class="tab-content">
+            <h2>✅ Чек‑лист самопроверки</h2>
+
+            <div class="checklist">
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    <span>Я знаю, как опубликовать сайт в интернет</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    <span>Я понимаю, что такое хостинг</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    <span>Я знаю, что такое домен</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    <span>Я создал GitHub аккаунт</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    <span>Я создал репозиторий USERNAME.github.io</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    <span>Я загрузил файлы сайта на GitHub</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    <span>Я включил GitHub Pages</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    <span>Мой сайт доступен по адресу USERNAME.github.io</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    <span>Я выполнил все 7 практических заданий</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    <span>Я готов к мастер‑классу 8: Защита проектов</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-buttons">
+            <a href="mk6-index.html" class="btn btn-primary">⬅️ Назад: мастер‑класс 6 Графика</a>
+            <a href="portal-index.html" class="btn btn-primary">🏠 На портал</a>
+            <a href="mk8-index.html" class="btn btn-success">➡️ Далее: мастер‑класс 8 Финал</a>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Мастер‑класс 7: Публикация в сети</strong></p>
+        <p>© 2025 Серия мастер‑классов по веб‑технологиям</p>
+        <p><a href="portal-index.html">Вернуться на портал</a></p>
+    </footer>
+
+    <script>
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Checklist
+        document.querySelectorAll('.check-toggle').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                this.parentElement.classList.toggle('checked');
+            });
+        });
+
+        // Tasks
+        document.querySelectorAll('.task-check').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                this.parentElement.classList.toggle('checked');
+            });
+        });
+    </script>
+</body>
+</html>

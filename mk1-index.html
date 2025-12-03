@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мастер‑класс 1: Введение в веб‑профессии</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2180d9;
+            --secondary: #ff9800;
+            --success: #4caf50;
+            --accent: #9c27b0;
+            --danger: #f44336;
+            --dark: #1a1a1a;
+            --light: #f5f5f5;
+            --text: #333;
+            --text-light: #666;
+            --border: #ddd;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 32px;
+            --radius: 8px;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #6f86d6 0%, #a78bfa 100%);
+            color: white;
+            padding: var(--spacing-lg) var(--spacing-md);
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: var(--spacing-md);
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+            box-shadow: var(--shadow);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: var(--text-light);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md) var(--spacing-lg);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .progress-bar h3 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.1rem;
+        }
+
+        .progress-track {
+            display: flex;
+            gap: var(--spacing-sm);
+            height: 8px;
+        }
+
+        .progress-segment {
+            flex: 1;
+            background: var(--light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-segment.active {
+            background: linear-gradient(90deg, #6f86d6 0%, #a78bfa 100%);
+            box-shadow: 0 0 10px rgba(107, 134, 214, 0.3);
+        }
+
+        /* Learning Path */
+        .learning-path {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .learning-path h2 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-lg);
+            font-size: 1.5rem;
+        }
+
+        .path-item {
+            display: flex;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: linear-gradient(135deg, rgba(107, 134, 214, 0.05) 0%, rgba(167, 139, 250, 0.05) 100%);
+            border-left: 4px solid var(--primary);
+            border-radius: var(--radius);
+        }
+
+        .path-time {
+            min-width: 80px;
+            background: var(--primary);
+            color: white;
+            padding: var(--spacing-md);
+            border-radius: var(--radius);
+            text-align: center;
+            font-weight: bold;
+            height: fit-content;
+        }
+
+        .path-content h3 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .path-content p {
+            color: var(--text-light);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* Professions Grid */
+        .professions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .profession-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .profession-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .profession-header {
+            background: linear-gradient(135deg, #6f86d6 0%, #a78bfa 100%);
+            color: white;
+            padding: var(--spacing-lg);
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .profession-body {
+            padding: var(--spacing-lg);
+        }
+
+        .profession-body h3 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .profession-body p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .profession-skills {
+            background: var(--light);
+            padding: var(--spacing-md);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .profession-skills h4 {
+            color: var(--primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .skill-tag {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+
+        .salary-range {
+            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+            color: white;
+            padding: var(--spacing-md);
+            border-radius: var(--radius);
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .quiz-section h2 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-lg);
+            font-size: 1.5rem;
+        }
+
+        .quiz-container {
+            display: none;
+        }
+
+        .quiz-container.active {
+            display: block;
+        }
+
+        .question {
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: var(--light);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary);
+            position: relative;
+        }
+
+        .question-text {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: var(--spacing-md);
+            font-size: 1.1rem;
+        }
+
+        .answer-option {
+            display: block;
+            background: white;
+            border: 2px solid var(--border);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .answer-option:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(107, 134, 214, 0.05) 0%, rgba(167, 139, 250, 0.05) 100%);
+        }
+
+        .answer-option input {
+            margin-right: var(--spacing-md);
+        }
+
+        .quiz-result {
+            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            text-align: center;
+            display: none;
+            margin-top: var(--spacing-lg);
+        }
+
+        .quiz-result.active {
+            display: block;
+        }
+
+        .result-profile {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .result-description {
+            opacity: 0.9;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .result-button {
+            background: white;
+            color: var(--success);
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: var(--spacing-md);
+            transition: all 0.3s ease;
+        }
+
+        .result-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Button */
+        .btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: var(--spacing-md);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Checklist */
+        .checklist {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .checklist h3 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-md);
+            background: var(--light);
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .checklist-item input {
+            margin-right: var(--spacing-md);
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .checklist-item.checked {
+            background: var(--success);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .professions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .path-item {
+                flex-direction: column;
+            }
+
+            .breadcrumb {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profession-card {
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        .profession-card:nth-child(1) { animation-delay: 0.1s; }
+        .profession-card:nth-child(2) { animation-delay: 0.2s; }
+        .profession-card:nth-child(3) { animation-delay: 0.3s; }
+        .profession-card:nth-child(4) { animation-delay: 0.4s; }
+        .profession-card:nth-child(5) { animation-delay: 0.5s; }
+        .profession-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>💼 Введение в веб‑профессии (мастер‑класс 1)</h1>
+        <p>Узнай о профессиях в IT и найди свою роль в веб‑команде</p>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="../portal-index.html">🏠 Портал серии</a>
+        <span>/</span>
+        <span>Введение в веб‑профессии</span>
+    </div>
+
+    <div class="container">
+        <!-- БЛОК 1. ОБЩАЯ ИНФОРМАЦИЯ О МАСТЕР‑КЛАССЕ -->
+        <div class="learning-path" style="margin-top: var(--spacing-lg);">
+            <h2>📘 Паспорт мастер‑класса</h2>
+            <p><strong>Название:</strong> «Введение в мир веб‑профессий» (мастер‑класс 1 серии профориентационных мастер‑классов по веб‑технологиям).</p>
+            <p><strong>Целевая аудитория:</strong> учащиеся 8–9 классов, интересующиеся IT и цифровыми технологиями.</p>
+            <p><strong>Продолжительность:</strong> 2 академических часа (90 минут).</p>
+            <p><strong>Форма проведения:</strong> комбинированный мастер‑класс (лекция + практическая диагностика + групповое обсуждение).</p>
+            <p><strong>Оборудование:</strong> проектор и экран, компьютер/ноутбук преподавателя, флипчарт/интерактивная доска, раздаточные материалы (анкета «Мой IT‑профиль», карточки с профессиями), стикеры и маркеры.</p>
+        </div>
+
+        <!-- БЛОК 2. ЦЕЛИ И ЗАДАЧИ -->
+        <div class="learning-path">
+            <h2>🎯 Цели и задачи мастер‑класса</h2>
+            <p><strong>Цель:</strong> сформировать у школьников целостное представление о профессиях в сфере веб‑разработки и помочь им определить собственные интересы и склонности в IT‑области.</p>
+            <p><strong>Задачи:</strong></p>
+            <ul style="margin-left: 1.2rem; color: var(--text-light);">
+                <li>познакомить учащихся с ключевыми профессиями веб‑индустрии и ролями в команде веб‑проекта;</li>
+                <li>показать перспективы и востребованность IT‑специальностей на современном рынке труда;</li>
+                <li>провести экспресс‑диагностику интересов и склонностей школьников к различным видам деятельности в сфере IT;</li>
+                <li>сформировать мотивацию к участию в последующих мастер‑классах серии и дальнейшему изучению веб‑технологий.</li>
+            </ul>
+        </div>
+
+        <!-- Progress Bar (для обучающихся) -->
+        <div class="progress-bar">
+            <h3>📊 Твой прогресс в серии</h3>
+            <div class="progress-track">
+                <div class="progress-segment active"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+            </div>
+        </div>
+
+        <!-- БЛОК 3. СТРУКТУРА И ХОД МАСТЕР‑КЛАССА -->
+        <div class="learning-path">
+            <h2>📋 План занятия (90 минут)</h2>
+            
+            <div class="path-item">
+                <div class="path-time">15 мин</div>
+                <div class="path-content">
+                    <h3>🎯 Вводная часть</h3>
+                    <p><strong>Цель:</strong> Познакомиться и поставить цели</p>
+                    <p>Обсуждение: какие IT‑профессии ты знаешь? С какими цифровыми продуктами ты встречаешься каждый день?</p>
+                </div>
+            </div>
+
+            <div class="path-item">
+                <div class="path-time">30 мин</div>
+                <div class="path-content">
+                    <h3>🎓 Теоретическая часть</h3>
+                    <p><strong>Темы:</strong> Рынок IT, веб‑профессии, роли в команде</p>
+                    <p>Изучи различные профессии, их обязанности, требуемые навыки и возможности развития карьеры.</p>
+                </div>
+            </div>
+
+            <div class="path-item">
+                <div class="path-time">35 мин</div>
+                <div class="path-content">
+                    <h3>🎯 Практическая диагностика</h3>
+                    <p><strong>Активность:</strong> Анкета "Мой IT‑профиль"</p>
+                    <p>Пройди интерактивный тест, ответь на вопросы о твоих интересах и получи рекомендацию профиля!</p>
+                </div>
+            </div>
+
+            <div class="path-item">
+                <div class="path-time">10 мин</div>
+                <div class="path-content">
+                    <h3>💭 Рефлексия</h3>
+                    <p><strong>Обсуждение:</strong> Какие профессии тебе интересны? Что дальше?</p>
+                    <p>Подведи итоги, запиши свои впечатления и планы на следующие мастер‑классы.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- БЛОК 4. ОБЗОР ОСНОВНЫХ ВЕБ‑ПРОФЕССИЙ -->
+        <h2 style="color: var(--primary); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-lg); font-size: 1.8rem; text-align: center;">
+            💡 Основные веб‑профессии
+        </h2>
+
+        <div class="professions-grid">
+            <!-- Frontend Developer -->
+            <div class="profession-card">
+                <div class="profession-header">👨‍💻</div>
+                <div class="profession-body">
+                    <h3>Frontend разработчик</h3>
+                    <p><strong>Что делает:</strong> Создает видимую часть сайта — то, что видит пользователь в браузере.</p>
+                    <p><strong>Инструменты:</strong> HTML, CSS, JavaScript, фреймворки (React, Vue, Angular)</p>
+                    <div class="profession-skills">
+                        <h4>Ключевые навыки</h4>
+                        <div class="skill-tag">HTML/CSS</div>
+                        <div class="skill-tag">JavaScript</div>
+                        <div class="skill-tag">Дизайн</div>
+                        <div class="skill-tag">UX/UI</div>
+                    </div>
+                    <div class="salary-range">💰 $60K–120K/год</div>
+                </div>
+            </div>
+
+            <!-- Backend Developer -->
+            <div class="profession-card">
+                <div class="profession-header">⚙️</div>
+                <div class="profession-body">
+                    <h3>Backend разработчик</h3>
+                    <p><strong>Что делает:</strong> Создает логику сайта — базы данных, серверы, обработку запросов.</p>
+                    <p><strong>Инструменты:</strong> Python, Node.js, Java, PHP, базы данных</p>
+                    <div class="profession-skills">
+                        <h4>Ключевые навыки</h4>
+                        <div class="skill-tag">Программирование</div>
+                        <div class="skill-tag">БД</div>
+                        <div class="skill-tag">API</div>
+                        <div class="skill-tag">DevOps</div>
+                    </div>
+                    <div class="salary-range">💰 $70K–130K/год</div>
+                </div>
+            </div>
+
+            <!-- Web Designer -->
+            <div class="profession-card">
+                <div class="profession-header">🎨</div>
+                <div class="profession-body">
+                    <h3>Веб‑дизайнер</h3>
+                    <p><strong>Что делает:</strong> Создает красивый и удобный интерфейс сайта — макеты, цвета, типографика.</p>
+                    <p><strong>Инструменты:</strong> Figma, Adobe XD, Sketch, UI кит</p>
+                    <div class="profession-skills">
+                        <h4>Ключевые навыки</h4>
+                        <div class="skill-tag">Дизайн</div>
+                        <div class="skill-tag">Figma</div>
+                        <div class="skill-tag">Типография</div>
+                        <div class="skill-tag">Композиция</div>
+                    </div>
+                    <div class="salary-range">💰 $50K–100K/год</div>
+                </div>
+            </div>
+
+            <!-- UX/UI Specialist -->
+            <div class="profession-card">
+                <div class="profession-header">🎯</div>
+                <div class="profession-body">
+                    <h3>UX/UI специалист</h3>
+                    <p><strong>Что делает:</strong> Делает сайт удобным для пользователя — исследует, тестирует, улучшает.</p>
+                    <p><strong>Инструменты:</strong> Figma, UserTesting, Analytics, Prototyping</p>
+                    <div class="profession-skills">
+                        <h4>Ключевые навыки</h4>
+                        <div class="skill-tag">Research</div>
+                        <div class="skill-tag">Тестирование</div>
+                        <div class="skill-tag">Дизайн</div>
+                        <div class="skill-tag">Аналитика</div>
+                    </div>
+                    <div class="salary-range">💰 $55K–115K/год</div>
+                </div>
+            </div>
+
+            <!-- Content Manager -->
+            <div class="profession-card">
+                <div class="profession-header">📝</div>
+                <div class="profession-body">
+                    <h3>Контент‑менеджер</h3>
+                    <p><strong>Что делает:</strong> Создает и управляет текстовым и визуальным контентом на сайте.</p>
+                    <p><strong>Инструменты:</strong> CMS, Markdown, SEO, Copywriting</p>
+                    <div class="profession-skills">
+                        <h4>Ключевые навыки</h4>
+                        <div class="skill-tag">Письмо</div>
+                        <div class="skill-tag">SEO</div>
+                        <div class="skill-tag">Маркетинг</div>
+                        <div class="skill-tag">Редактирование</div>
+                    </div>
+                    <div class="salary-range">💰 $40K–80K/год</div>
+                </div>
+            </div>
+
+            <!-- QA Tester -->
+            <div class="profession-card">
+                <div class="profession-header">🔍</div>
+                <div class="profession-body">
+                    <h3>QA / Тестировщик</h3>
+                    <p><strong>Что делает:</strong> Проверяет сайт на ошибки, несовместимость, удобство использования.</p>
+                    <p><strong>Инструменты:</strong> Selenium, TestRail, DevTools, Browser Testing</p>
+                    <div class="profession-skills">
+                        <h4>Ключевые навыки</h4>
+                        <div class="skill-tag">Тестирование</div>
+                        <div class="skill-tag">Внимание</div>
+                        <div class="skill-tag">Автоматизация</div>
+                        <div class="skill-tag">Скрипты</div>
+                    </div>
+                    <div class="salary-range">💰 $45K–90K/год</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- БЛОК 5. ПРАКТИЧЕСКАЯ ДИАГНОСТИКА «МОЙ IT‑ПРОФИЛЬ» -->
+        <div class="quiz-section" id="quiz">
+            <h2>🎯 Тест: Найди свой IT‑профиль</h2>
+            
+            <div class="quiz-container active" id="quizContainer">
+                <!-- Question 1 -->
+                <div class="question">
+                    <div class="question-text">1️⃣ Что больше тебе нравится?</div>
+                    <label class="answer-option">
+                        <input type="radio" name="q1" value="frontend">
+                        Видеть результат своей работы в браузере
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q1" value="backend">
+                        Разбираться в сложной логике и алгоритмах
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q1" value="design">
+                        Создавать красивые визуальные макеты
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q1" value="content">
+                        Писать интересный текст и рассказывать истории
+                    </label>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question">
+                    <div class="question-text">2️⃣ Какой из этих инструментов тебя привлекает?</div>
+                    <label class="answer-option">
+                        <input type="radio" name="q2" value="frontend">
+                        HTML, CSS, JavaScript
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q2" value="backend">
+                        Python, Java, базы данных
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q2" value="design">
+                        Figma, Adobe XD, Canva
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q2" value="content">
+                        CMS, SEO, Copywriting
+                    </label>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question">
+                    <div class="question-text">3️⃣ Как ты предпочитаешь работать?</div>
+                    <label class="answer-option">
+                        <input type="radio" name="q3" value="frontend">
+                        Много экспериментирую и создаю интерфейсы
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q3" value="backend">
+                        Решаю сложные проблемы и пишу алгоритмы
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q3" value="design">
+                        Думаю о красоте и удобстве
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q3" value="content">
+                        Общаюсь с людьми и делюсь информацией
+                    </label>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question">
+                    <div class="question-text">4️⃣ Какая из этих задач тебе больше нравится?</div>
+                    <label class="answer-option">
+                        <input type="radio" name="q4" value="frontend">
+                        Сделать кнопку, которая работает как надо
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q4" value="backend">
+                        Создать систему, которая обрабатывает миллионы запросов
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q4" value="design">
+                        Подобрать идеальные цвета и шрифты для сайта
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q4" value="content">
+                        Написать текст, который будет интересен людям
+                    </label>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question">
+                    <div class="question-text">5️⃣ Что для тебя главное в работе?</div>
+                    <label class="answer-option">
+                        <input type="radio" name="q5" value="frontend">
+                        Видеть, как люди пользуются моей работой
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q5" value="backend">
+                        Знать, что система работает надежно и быстро
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q5" value="design">
+                        Слышать "Вау, как красиво!" от пользователей
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="q5" value="content">
+                        Помогать людям получать нужную им информацию
+                    </label>
+                </div>
+
+                <button class="btn" onclick="calculateResult()">🎯 Узнать мой профиль!</button>
+            </div>
+
+            <!-- Result -->
+            <div class="quiz-result" id="quizResult">
+                <div class="result-profile" id="profileName"></div>
+                <div class="result-description" id="profileDescription"></div>
+                <button class="result-button" onclick="resetQuiz()">🔄 Пройти заново</button>
+            </div>
+        </div>
+
+        <!-- БЛОК 6. ОЦЕНИВАНИЕ И РЕФЛЕКСИЯ -->
+        <div class="checklist">
+            <h3>✅ Чек‑лист самопроверки</h3>
+            <label class="checklist-item">
+                <input type="checkbox" class="check-item">
+                <span>Я знаю, какие профессии существуют в веб‑разработке</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" class="check-item">
+                <span>Я понимаю разницу между Frontend, Backend и дизайном</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" class="check-item">
+                <span>Я знаю, какие инструменты используются в каждой профессии</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" class="check-item">
+                <span>Я определил(а) свой IT‑профиль в тесте</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" class="check-item">
+                <span>Я готов(а) начать осваивать веб‑технологии на следующих мастер‑классах</span>
+            </label>
+        </div>
+
+        <!-- Next Steps -->
+        <div style="background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%); color: white; padding: var(--spacing-lg); border-radius: var(--radius); margin-bottom: var(--spacing-lg); text-align: center;">
+            <h3 style="margin-bottom: var(--spacing-md);">🚀 Что дальше?</h3>
+            <p style="margin-bottom: var(--spacing-md);">Ты готов(а)? На следующем мастер‑классе мы начнем создавать твой первый сайт с HTML!</p>
+            <a href="mk2-index.html" class="btn" style="display: inline-block; margin-top: 0;">➡️ Перейти к мастер‑классу 2: HTML</a>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Мастер‑класс 1: Введение в веб‑профессии</strong></p>
+        <p>© 2025 Серия мастер‑классов по веб‑технологиям</p>
+        <p><a href="portal-index.html">Вернуться на портал</a></p>
+    </footer>
+
+    <script>
+        // Checklist functionality
+        document.querySelectorAll('.check-item').forEach(item => {
+            item.addEventListener('change', function() {
+                this.parentElement.classList.toggle('checked');
+            });
+        });
+
+        // Quiz functionality
+        const profiles = {
+            frontend: {
+                name: '👨‍💻 Frontend разработчик',
+                description: 'Ты творческий и любишь видеть результаты! Frontend — это про создание красивых и функциональных интерфейсов. Тебе подойдут: HTML, CSS, JavaScript, React. На мастер‑классах 2–4 ты создашь свой интерактивный сайт!'
+            },
+            backend: {
+                name: '⚙️ Backend разработчик',
+                description: 'Ты логический и любишь сложные задачи! Backend — это про строительство надежной логики сайтов. Тебе подойдут: Python, Java, Node.js, базы данных. На мастер‑классах 2–4 ты поймёшь, как работает сервер!'
+            },
+            design: {
+                name: '🎨 Веб‑дизайнер',
+                description: 'Ты художник и перфекционист! Веб‑дизайн — это про создание красивых макетов и интерфейсов. Тебе подойдут: Figma, композиция, типография, цветовые схемы. На мастер‑классе 6 ты создашь свой UI!'
+            },
+            content: {
+                name: '📝 Контент‑менеджер',
+                description: 'Ты общительный и креативный писатель! Контент — это про создание смысла и информации для сайтов. Тебе подойдут: SEO, copywriting, маркетинг, CMS. На мастер‑классах 2–4 ты поймёшь, как структурировать информацию!'
+            }
+        };
+
+        function calculateResult() {
+            const answers = {
+                frontend: 0,
+                backend: 0,
+                design: 0,
+                content: 0
+            };
+
+            // Count answers
+            for (let i = 1; i <= 5; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected) {
+                    answers[selected.value]++;
+                }
+            }
+
+            // Find max
+            let maxProfile = 'frontend';
+            let maxCount = 0;
+            for (let profile in answers) {
+                if (answers[profile] > maxCount) {
+                    maxCount = answers[profile];
+                    maxProfile = profile;
+                }
+            }
+
+            // Show result
+            document.getElementById('quizContainer').classList.remove('active');
+            document.getElementById('quizResult').classList.add('active');
+            document.getElementById('profileName').textContent = profiles[maxProfile].name;
+            document.getElementById('profileDescription').textContent = profiles[maxProfile].description;
+        }
+
+        function resetQuiz() {
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.checked = false;
+            });
+            document.getElementById('quizContainer').classList.add('active');
+            document.getElementById('quizResult').classList.remove('active');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

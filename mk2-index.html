@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мастер‑класс 2: Основы HTML</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2196f3;
+            --accent: #ff6f00;
+            --success: #4caf50;
+            --warning: #ffc107;
+            --danger: #f44336;
+            --dark: #1a1a1a;
+            --light: #f5f5f5;
+            --text: #333;
+            --text-light: #666;
+            --border: #ddd;
+            --spacing: 16px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2ebf2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
+            color: white;
+            padding: 3rem var(--spacing);
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: var(--spacing);
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: white;
+            padding: var(--spacing);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 10px 20px;
+            border: 2px solid var(--border);
+            background: white;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover,
+        .nav-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 {
+            color: var(--accent);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #f5f5f5;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-block code {
+            color: #c92c2c;
+        }
+
+        /* Interactive Example */
+        .example {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .example {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .example-code {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .example-code pre {
+            margin: 0;
+            overflow-x: auto;
+        }
+
+        .example-code code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #333;
+        }
+
+        .example-result {
+            background: white;
+            border: 2px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 6px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Tags Reference */
+        .tags-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tag-card {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border: 2px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .tag-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .tag-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .tag-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Tasks */
+        .tasks {
+            background: linear-gradient(135deg, #fff3e0 0%, #fff9c4 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--warning);
+        }
+
+        .tasks h3 {
+            color: var(--warning);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .task-item {
+            background: white;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .task-item input {
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+
+        /* Checklist */
+        .checklist {
+            background: #f0f4f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+
+        .checklist-item input {
+            margin-right: 1rem;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checklist-item.checked {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: var(--accent);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        /* Alert */
+        .alert {
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            border-left-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            border-left-color: var(--success);
+            color: var(--success);
+        }
+
+        .alert-warning {
+            background: #fff3e0;
+            border-left-color: var(--warning);
+            color: var(--warning);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Progress */
+        .progress-bar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .progress-track {
+            display: flex;
+            gap: 0.5rem;
+            height: 8px;
+        }
+
+        .progress-item {
+            flex: 1;
+            background: var(--light);
+            border-radius: 4px;
+        }
+
+        .progress-item.active {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            box-shadow: 0 0 10px rgba(33, 150, 243, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏗️ Мастер‑класс 2: Основы веб‑вёрстки HTML</h1>
+        <p>Создай свою первую HTML‑страницу!</p>
+    </header>
+
+    <div class="container">
+        <!-- Progress -->
+        <div class="progress-bar">
+            <h3>📊 Твой прогресс</h3>
+            <div class="progress-track">
+                <div class="progress-item active"></div>
+                <div class="progress-item active"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+                <div class="progress-item"></div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('theory')">📚 Теория</button>
+            <button class="nav-tab" onclick="showTab('tags')">🏷️ Теги</button>
+            <button class="nav-tab" onclick="showTab('examples')">💡 Примеры</button>
+            <button class="nav-tab" onclick="showTab('tasks')">✍️ Задания</button>
+            <button class="nav-tab" onclick="showTab('checklist')">✅ Чек‑лист</button>
+        </div>
+
+        <!-- Theory Section -->
+        <div id="theory" class="section active">
+            <h2>📚 Что такое HTML?</h2>
+            
+            <p><strong>HTML (HyperText Markup Language)</strong> — это язык разметки, который используется для создания структуры веб‑страниц. Он говорит браузеру, какие элементы должны быть на странице и как их расположить.</p>
+
+            <div class="alert alert-info">
+                💡 <strong>Совет:</strong> Если CSS — это "одежда" сайта, то HTML — это его "скелет". Без HTML нечего стилизовать!
+            </div>
+
+            <h3>Как устроен HTML‑документ?</h3>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Название страницы&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Привет, мир!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h3>Основные части:</h3>
+            <ul style="margin: 1rem 0 1rem 2rem;">
+                <li><strong>&lt;!DOCTYPE html&gt;</strong> — говорит браузеру, что это HTML5</li>
+                <li><strong>&lt;html&gt;...&lt;/html&gt;</strong> — основной контейнер всей страницы</li>
+                <li><strong>&lt;head&gt;...&lt;/head&gt;</strong> — информация о странице (не видна на странице)</li>
+                <li><strong>&lt;body&gt;...&lt;/body&gt;</strong> — видимый контент страницы</li>
+            </ul>
+
+            <h3>Что такое теги?</h3>
+            <p>Теги — это инструкции для браузера. Каждый тег имеет открывающую часть (&lt;tag&gt;) и закрывающую часть (&lt;/tag&gt;).</p>
+            
+            <div class="alert alert-warning">
+                ⚠️ <strong>Важно:</strong> Не забывай закрывать теги! Открыл &lt;p&gt; — закрой &lt;/p&gt;
+            </div>
+
+            <h3>Структура тега:</h3>
+            <div class="code-block">
+&lt;tag атрибут="значение"&gt;Содержимое&lt;/tag&gt;
+            </div>
+        </div>
+
+        <!-- Tags Section -->
+        <div id="tags" class="section">
+            <h2>🏷️ Основные HTML‑теги</h2>
+            
+            <div class="tags-grid">
+                <div class="tag-card">
+                    <h4>&lt;h1&gt;...&lt;/h6&gt;</h4>
+                    <p><strong>Заголовки</strong> разных уровней. h1 — самый большой, h6 — самый маленький.</p>
+                    <code>&lt;h1&gt;Главный заголовок&lt;/h1&gt;</code>
+                </div>
+
+                <div class="tag-card">
+                    <h4>&lt;p&gt;&lt;/p&gt;</h4>
+                    <p><strong>Абзац</strong> текста. Используется для блоков текста.</p>
+                    <code>&lt;p&gt;Это текст&lt;/p&gt;</code>
+                </div>
+
+                <div class="tag-card">
+                    <h4>&lt;a&gt;&lt;/a&gt;</h4>
+                    <p><strong>Ссылка</strong> на другую страницу или сайт. href — адрес.</p>
+                    <code>&lt;a href="url"&gt;Ссылка&lt;/a&gt;</code>
+                </div>
+
+                <div class="tag-card">
+                    <h4>&lt;img&gt;</h4>
+                    <p><strong>Изображение</strong> на странице. src — путь к файлу.</p>
+                    <code>&lt;img src="photo.jpg" alt="Фото"&gt;</code>
+                </div>
+
+                <div class="tag-card">
+                    <h4>&lt;ul&gt;, &lt;li&gt;</h4>
+                    <p><strong>Маркированный список</strong>. ul — контейнер, li — элемент.</p>
+                    <code>&lt;ul&gt;&lt;li&gt;Пункт&lt;/li&gt;&lt;/ul&gt;</code>
+                </div>
+
+                <div class="tag-card">
+                    <h4>&lt;ol&gt;, &lt;li&gt;</h4>
+                    <p><strong>Нумерованный список</strong>. ol — контейнер.</p>
+                    <code>&lt;ol&gt;&lt;li&gt;Пункт&lt;/li&gt;&lt;/ol&gt;</code>
+                </div>
+
+                <div class="tag-card">
+                    <h4>&lt;div&gt;&lt;/div&gt;</h4>
+                    <p><strong>Контейнер</strong> для группировки элементов. Основной блок верстки.</p>
+                    <code>&lt;div class="block"&gt;...&lt;/div&gt;</code>
+                </div>
+
+                <div class="tag-card">
+                    <h4>&lt;span&gt;&lt;/span&gt;</h4>
+                    <p><strong>Строчный контейнер</strong> для текста внутри абзаца.</p>
+                    <code>&lt;p&gt;Привет &lt;span&gt;мир&lt;/span&gt;!&lt;/p&gt;</code>
+                </div>
+
+                <div class="tag-card">
+                    <h4>&lt;strong&gt;, &lt;em&gt;</h4>
+                    <p><strong>Выделение текста</strong>. strong — жирный, em — курсив.</p>
+                    <code>&lt;strong&gt;Важное&lt;/strong&gt;</code>
+                </div>
+
+                <div class="tag-card">
+                    <h4>&lt;button&gt;&lt;/button&gt;</h4>
+                    <p><strong>Кнопка</strong> для взаимодействия с пользователем.</p>
+                    <code>&lt;button&gt;Нажми меня!&lt;/button&gt;</code>
+                </div>
+
+                <div class="tag-card">
+                    <h4>&lt;form&gt;&lt;/form&gt;</h4>
+                    <p><strong>Форма</strong> для ввода данных (email, пароль и т.д.).</p>
+                    <code>&lt;form&gt;...&lt;/form&gt;</code>
+                </div>
+
+                <div class="tag-card">
+                    <h4>&lt;input&gt;</h4>
+                    <p><strong>Поле ввода</strong> для пользователя. type указывает тип.</p>
+                    <code>&lt;input type="text"&gt;</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Examples Section -->
+        <div id="examples" class="section">
+            <h2>💡 Практические примеры</h2>
+
+            <h3>Пример 1: Заголовок и текст</h3>
+            <div class="example">
+                <div class="example-code">
+                    <pre><code>&lt;h1&gt;Добро пожаловать!&lt;/h1&gt;
+&lt;p&gt;Это мой первый сайт&lt;/p&gt;</code></pre>
+                </div>
+                <div class="example-result">
+                    <div>
+                        <h1 style="margin: 0 0 1rem 0;">Добро пожаловать!</h1>
+                        <p style="margin: 0;">Это мой первый сайт</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Пример 2: Список</h3>
+            <div class="example">
+                <div class="example-code">
+                    <pre><code>&lt;h2&gt;Мои интересы:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Программирование&lt;/li&gt;
+  &lt;li&gt;Дизайн&lt;/li&gt;
+  &lt;li&gt;Музыка&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+                </div>
+                <div class="example-result">
+                    <div>
+                        <h3 style="margin: 0 0 1rem 0;">Мои интересы:</h3>
+                        <ul style="margin: 0;">
+                            <li>Программирование</li>
+                            <li>Дизайн</li>
+                            <li>Музыка</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Пример 3: Ссылка и выделение</h3>
+            <div class="example">
+                <div class="example-code">
+                    <pre><code>&lt;p&gt;
+  Перейди на мой
+  &lt;strong&gt;&lt;a href="#"&gt;GitHub&lt;/a&gt;&lt;/strong&gt;
+  профиль!
+&lt;/p&gt;</code></pre>
+                </div>
+                <div class="example-result">
+                    <div>
+                        <p style="margin: 0;">
+                            Перейди на мой
+                            <strong><a href="#">GitHub</a></strong>
+                            профиль!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tasks Section -->
+        <div id="tasks" class="section">
+            <h2>✍️ Практические задания</h2>
+
+            <div class="tasks">
+                <h3>📝 Твои задачи на этом мастер‑классе</h3>
+
+                <div class="task-item">
+                    <input type="checkbox">
+                    <span><strong>Задание 1:</strong> Создай HTML‑файл с названием index.html и напиши в нем базовую структуру (DOCTYPE, html, head, body)</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox">
+                    <span><strong>Задание 2:</strong> Добавь заголовок &lt;h1&gt; со своим именем и абзац &lt;p&gt; с описанием себя</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox">
+                    <span><strong>Задание 3:</strong> Создай список из 5 своих интересов, используя &lt;ul&gt; и &lt;li&gt;</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox">
+                    <span><strong>Задание 4:</strong> Найди фотографию себя (или аватар) и вставь её на страницу через &lt;img&gt;</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox">
+                    <span><strong>Задание 5:</strong> Добавь ссылку на свой профиль GitHub или другую социальную сеть</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox">
+                    <span><strong>Финальное задание:</strong> Открой файл в браузере и проверь, что всё выглядит правильно</span>
+                </div>
+            </div>
+
+            <div class="alert alert-success">
+                ✅ <strong>Результат:</strong> Готовая HTML‑страница (визитка) с информацией о тебе!
+            </div>
+        </div>
+
+        <!-- Checklist Section -->
+        <div id="checklist" class="section">
+            <h2>✅ Чек‑лист самопроверки</h2>
+
+            <div class="checklist">
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    Я знаю, что такое HTML и зачем он нужен
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    Я понимаю структуру HTML‑документа
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    Я знаю, как открывать и закрывать теги
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    Я умею использовать основные теги (h1-h6, p, a, img, ul, li)
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    Я создал HTML‑файл на своем компьютере
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    Я открыл файл в браузере и увидел результат
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    Я выполнил все 6 практических заданий
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" class="check-toggle">
+                    Я готов перейти к мастер‑классу 3: CSS
+                </label>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div style="text-align: center; margin-top: 2rem; padding: 1rem; background: white; border-radius: 8px;">
+            <a href="mk1-index.html" class="btn">⬅️ мастер‑класс 1</a>
+            <a href="mk3-index.html" class="btn btn-success">➡️ мастер‑класс 3: CSS</a>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Мастер‑класс 2: Основы веб‑вёрстки HTML</strong></p>
+        <p>© 2025 Серия мастер‑классов | <a href="portal-index.html">Вернуться на портал</a></p>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Remove active from all buttons
+            const buttons = document.querySelectorAll('.nav-tab');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Show selected section
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Checklist functionality
+        document.querySelectorAll('.check-toggle').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                this.parentElement.classList.toggle('checked');
+            });
+        });
+
+        // Task checkbox functionality
+        document.querySelectorAll('.task-item input').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                this.parentElement.style.opacity = this.checked ? '0.6' : '1';
+                this.parentElement.style.textDecoration = this.checked ? 'line-through' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
