@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Диагностика: Файлы и каталоги (7 класс)</title>
+    <style>
+        :root {
+            --color-primary: #2180C1;
+            --color-primary-hover: #1a5fa0;
+            --color-success: #22B14C;
+            --color-warning: #FFA500;
+            --color-error: #C01530;
+            --color-bg: #f5f5f5;
+            --color-surface: #ffffff;
+            --color-text: #1a1a1a;
+            --color-text-light: #666666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #1a5fa0 100%);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .level-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .level-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--color-primary);
+            background: white;
+            color: var(--color-primary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .level-btn:hover {
+            background: var(--color-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .level-btn.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .level-btn.level-1 { border-color: #22B14C; color: #22B14C; }
+        .level-btn.level-1:hover { background: #22B14C; }
+        .level-btn.level-1.active { background: #22B14C; border-color: #22B14C; color: white; }
+
+        .level-btn.level-2 { border-color: var(--color-primary); color: var(--color-primary); }
+        .level-btn.level-2:hover { background: var(--color-primary); }
+        .level-btn.level-2.active { background: var(--color-primary); color: white; }
+
+        .level-btn.level-3 { border-color: #D32F2F; color: #D32F2F; }
+        .level-btn.level-3:hover { background: #D32F2F; }
+        .level-btn.level-3.active { background: #D32F2F; border-color: #D32F2F; color: white; }
+
+        .level-label {
+            display: block;
+            font-size: 12px;
+            margin-top: 4px;
+            opacity: 0.8;
+        }
+
+        .content {
+            background: var(--color-surface);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .level-content {
+            display: none;
+        }
+
+        .level-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .level-title {
+            font-size: 24px;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--color-primary);
+        }
+
+        .task-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid var(--color-primary);
+            border-radius: 4px;
+        }
+
+        .level-1 .task-block { border-left-color: #22B14C; }
+        .level-2 .task-block { border-left-color: var(--color-primary); }
+        .level-3 .task-block { border-left-color: #D32F2F; }
+
+        .task-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--color-primary);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .level-1 .task-number { background: #22B14C; }
+        .level-2 .task-number { background: var(--color-primary); }
+        .level-3 .task-number { background: #D32F2F; }
+
+        .task-description {
+            color: var(--color-text-light);
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .task-steps {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .task-steps ol {
+            margin-left: 20px;
+        }
+
+        .task-steps li {
+            margin-bottom: 8px;
+            color: var(--color-text-light);
+        }
+
+        .criteria {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid var(--color-primary);
+        }
+
+        .criteria-title {
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .criteria-text {
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-check {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .btn-check:hover {
+            background: #1a8a3a;
+            transform: translateY(-2px);
+        }
+
+        .btn-reset {
+            background: #ddd;
+            color: var(--color-text);
+        }
+
+        .btn-reset:hover {
+            background: #ccc;
+        }
+
+        .results {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .results h3 {
+            color: var(--color-primary);
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background: white;
+            border-left: 4px solid #ccc;
+        }
+
+        .result-item.completed {
+            border-left-color: var(--color-success);
+            background: #f0fff0;
+        }
+
+        .result-item.incomplete {
+            border-left-color: var(--color-error);
+            background: #fff0f0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            margin: 8px 0;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .grading-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .grading-table th,
+        .grading-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .grading-table th {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .grading-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .grade-5 { color: var(--color-success); font-weight: 600; }
+        .grade-4 { color: var(--color-primary); font-weight: 600; }
+        .grade-3 { color: var(--color-warning); font-weight: 600; }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: var(--color-text-light);
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 22px;
+            }
+
+            .level-selector {
+                flex-direction: column;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .grading-table {
+                font-size: 12px;
+            }
+
+            .grading-table th,
+            .grading-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📁 Диагностика: Файлы и каталоги</h1>
+            <p>Тема: "Файлы и каталоги. Поиск файлов средствами операционной системы" | Информатика, 7 класс</p>
+        </header>
+
+        <div class="level-selector">
+            <button class="level-btn level-1 active" onclick="selectLevel(1)">
+                <span>Уровень 1</span>
+                <span class="level-label">Базовый</span>
+            </button>
+            <button class="level-btn level-2" onclick="selectLevel(2)">
+                <span>Уровень 2</span>
+                <span class="level-label">Средний</span>
+            </button>
+            <button class="level-btn level-3" onclick="selectLevel(3)">
+                <span>Уровень 3</span>
+                <span class="level-label">Повышенный</span>
+            </button>
+        </div>
+
+        <!-- УРОВЕНЬ 1 -->
+        <div class="level-content active level-1" id="level1">
+            <div class="content">
+                <h2 class="level-title">🟢 Уровень 1: БАЗОВЫЙ</h2>
+                <p style="color: var(--color-text-light); margin-bottom: 20px;"><strong>Для начинающих.</strong> Задания помогут вам разобраться в основах работы с файлами и папками.</p>
+
+                <div class="task-block">
+                    <div class="task-title">
+                        <span class="task-number">1.1</span>
+                        Ориентирование в файловой системе
+                    </div>
+                    <div class="task-description">
+                        Откройте программу "Проводник" и найдите нужную информацию о файловой системе вашего компьютера.
+                    </div>
+                    <div class="task-steps">
+                        <strong>Что нужно сделать:</strong>
+                        <ol>
+                            <li>Откройте программу "Проводник" (значок папки на рабочем столе или в панели задач)</li>
+                            <li>Найдите название диска, с которого начинается путь (например, C:, D:)</li>
+                            <li>Перейдите в папку "Документы" ("Мои документы")</li>
+                            <li>Запишите в тетрадь:</li>
+                            <ul style="margin-left: 20px; margin-top: 8px;">
+                                <li>Название диска</li>
+                                <li>Полный путь к папке Документы</li>
+                                <li>Полное имя любого файла в этой папке (с расширением)</li>
+                            </ul>
+                        </ol>
+                    </div>
+                    <div class="criteria">
+                        <div class="criteria-title">✓ Как проверить себя:</div>
+                        <div class="criteria-text">Вы правильно записали все три элемента? Путь начинается с буквы диска (C:)? Имя файла содержит расширение (например, .txt, .doc)?</div>
+                    </div>
+                </div>
+
+                <div class="task-block">
+                    <div class="task-title">
+                        <span class="task-number">1.2</span>
+                        Основные операции с файлами
+                    </div>
+                    <div class="task-description">
+                        Практически выполните основные действия с файлами и папками.
+                    </div>
+                    <div class="task-steps">
+                        <strong>Что нужно сделать:</strong>
+                        <ol>
+                            <li>В папке "Документы" создайте новую папку. Назовите её <strong>"МойПорядок"</strong></li>
+                            <li>Откройте эту новую папку</li>
+                            <li>Создайте в ней новый текстовый файл. Назовите его <strong>"Тест.txt"</strong></li>
+                            <li>Скопируйте этот файл (Ctrl+C → выделить → Ctrl+V)</li>
+                            <li>Переименуйте копию в <strong>"Тест_копия.txt"</strong> (правая кнопка мыши → Переименовать)</li>
+                            <li>Покажите результат учителю</li>
+                        </ol>
+                    </div>
+                    <div class="criteria">
+                        <div class="criteria-title">✓ Как проверить себя:</div>
+                        <div class="criteria-text">В папке "МойПорядок" находятся два файла? Оба файла имеют расширение .txt? Имена файлов написаны правильно?</div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-check" onclick="checkLevel1()">✓ Я выполнил задания</button>
+                    <button class="btn btn-reset" onclick="resetLevel1()">↻ Сбросить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- УРОВЕНЬ 2 -->
+        <div class="level-content level-2" id="level2">
+            <div class="content">
+                <h2 class="level-title">🔵 Уровень 2: СРЕДНИЙ</h2>
+                <p style="color: var(--color-text-light); margin-bottom: 20px;"><strong>Для продвинутых.</strong> Используйте поиск с масками и организуйте структуру папок.</p>
+
+                <div class="task-block">
+                    <div class="task-title">
+                        <span class="task-number">2.1</span>
+                        Поиск файлов с использованием масок
+                    </div>
+                    <div class="task-description">
+                        Используйте маски для поиска нужных файлов. Маска — это шаблон для поиска с использованием специальных символов (* и ?).
+                    </div>
+                    <div class="task-steps">
+                        <strong>Что нужно сделать:</strong>
+                        <ol>
+                            <li>Откройте "Проводник" и перейдите в папку "Документы"</li>
+                            <li>Нажмите на кнопку поиска (значок лупы) в правом верхнем углу</li>
+                            <li>Выполните три поиска поочередно, вводя эти маски:
+                                <ul style="margin-left: 20px; margin-top: 8px;">
+                                    <li><code>*.txt</code> (все текстовые файлы)</li>
+                                    <li><code>п*</code> (все файлы, начинающиеся на букву "п")</li>
+                                    <li><code>*ок*</code> (все файлы со слогом "ок" внутри имени)</li>
+                                </ul>
+                            </li>
+                            <li>Для каждого поиска запишите, <strong>сколько файлов найдено</strong></li>
+                        </ol>
+                    </div>
+                    <div class="criteria">
+                        <div class="criteria-title">✓ Как проверить себя:</div>
+                        <div class="criteria-text">Все три поиска выполнены? Вы записали количество найденных файлов? Поняли, как работают символы * (любые символы) и ? (один символ)?</div>
+                    </div>
+                </div>
+
+                <div class="task-block">
+                    <div class="task-title">
+                        <span class="task-number">2.2</span>
+                        Организация файловой структуры
+                    </div>
+                    <div class="task-description">
+                        Создайте иерархическую структуру папок для хранения информации.
+                    </div>
+                    <div class="task-steps">
+                        <strong>Что нужно сделать:</strong>
+                        <ol>
+                            <li>В папке "Документы" создайте новую папку с именем <strong>"Библиотека"</strong></li>
+                            <li>Откройте папку "Библиотека" и создайте в ней три подпапки:
+                                <ul style="margin-left: 20px; margin-top: 8px;">
+                                    <li>"Книги"</li>
+                                    <li>"Аудио"</li>
+                                    <li>"Видео"</li>
+                                </ul>
+                            </li>
+                            <li>Нарисуйте в тетради <strong>схему структуры</strong> (как это выглядит, какие папки внутри каких)</li>
+                            <li>Запишите <strong>полные пути</strong> ко всем трём подпапкам:
+                                <ul style="margin-left: 20px; margin-top: 8px;">
+                                    <li>Например: C:\Users\Иван\Documents\Библиотека\Книги</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="criteria">
+                        <div class="criteria-title">✓ Как проверить себя:</div>
+                        <div class="criteria-text">Структура создана правильно (три подпапки внутри "Библиотеки")? Схема соответствует реальной структуре? Пути записаны без ошибок (начинаются с буквы диска)?</div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-check" onclick="checkLevel2()">✓ Я выполнил задания</button>
+                    <button class="btn btn-reset" onclick="resetLevel2()">↻ Сбросить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- УРОВЕНЬ 3 -->
+        <div class="level-content level-3" id="level3">
+            <div class="content">
+                <h2 class="level-title">🔴 Уровень 3: ПОВЫШЕННЫЙ</h2>
+                <p style="color: var(--color-text-light); margin-bottom: 20px;"><strong>Для отличников.</strong> Сложные задания на поиск, фильтрацию и проектирование структуры.</p>
+
+                <div class="task-block">
+                    <div class="task-title">
+                        <span class="task-number">3.1</span>
+                        Сложный поиск с фильтрацией
+                    </div>
+                    <div class="task-description">
+                        Найдите все графические файлы и проанализируйте их размеры.
+                    </div>
+                    <div class="task-steps">
+                        <strong>Что нужно сделать:</strong>
+                        <ol>
+                            <li>В "Проводнике" используйте поиск с маской <code>*.jpg</code> (изображения JPEG)</li>
+                            <li>Запомните количество найденных файлов</li>
+                            <li>Отсортируйте найденные файлы по размеру (от больших к маленьким)</li>
+                            <li>Для каждого файла <strong>запишите размер в байтах</strong></li>
+                            <li><strong>Рассчитайте общий размер</strong> всех найденных изображений (суммируйте все размеры)</li>
+                            <li>Определите, какой файл самый большой, какой самый маленький</li>
+                        </ol>
+                    </div>
+                    <div class="criteria">
+                        <div class="criteria-title">✓ Как проверить себя:</div>
+                        <div class="criteria-text">Все графические файлы найдены? Размеры правильно определены? Расчёт общего размера выполнен? Вы поняли разницу между размерами файлов?</div>
+                    </div>
+                </div>
+
+                <div class="task-block">
+                    <div class="task-title">
+                        <span class="task-number">3.2</span>
+                        Проектирование собственной файловой системы
+                    </div>
+                    <div class="task-description">
+                        Спроектируйте логичную и удобную структуру для хранения школьных материалов.
+                    </div>
+                    <div class="task-steps">
+                        <strong>Что нужно сделать:</strong>
+                        <ol>
+                            <li>Создайте основную папку "Мои предметы" в папке "Документы"</li>
+                            <li>Создайте в ней подпапки для 4 школьных предметов (например: Математика, Литература, История, Информатика)</li>
+                            <li>В каждую папку предмета добавьте три подпапки:
+                                <ul style="margin-left: 20px; margin-top: 8px;">
+                                    <li>"Конспекты"</li>
+                                    <li>"Домашние задания"</li>
+                                    <li>"Тесты"</li>
+                                </ul>
+                            </li>
+                            <li>В тетради <strong>нарисуйте полное дерево структуры</strong> (как минимум для двух предметов)</li>
+                            <li><strong>Напишите 5 полных путей</strong> к файлам, которые теоретически могут находиться в этой структуре, например:<br>
+                                <code>C:\Users\...\Мои предметы\Математика\Конспекты\тема1.txt</code>
+                            </li>
+                            <li>Обоснуйте, почему вы выбрали именно такую структуру (в 2-3 предложениях)</li>
+                        </ol>
+                    </div>
+                    <div class="criteria">
+                        <div class="criteria-title">✓ Как проверить себя:</div>
+                        <div class="criteria-text">Структура логична и удобна для использования? Дерево нарисовано правильно? Все пути написаны без ошибок (начинаются с диска, используют правильные разделители)? Вы можете объяснить свой выбор?</div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-check" onclick="checkLevel3()">✓ Я выполнил задания</button>
+                    <button class="btn btn-reset" onclick="resetLevel3()">↻ Сбросить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ТАБЛИЦА ОЦЕНИВАНИЯ -->
+        <div class="content" style="margin-top: 30px;">
+            <h3 style="color: var(--color-primary); margin-bottom: 15px;">📊 Критерии оценивания</h3>
+            <table class="grading-table">
+                <tr>
+                    <th>Оценка</th>
+                    <th>Уровень 1 (Базовый)</th>
+                    <th>Уровень 2 (Средний)</th>
+                    <th>Уровень 3 (Повышенный)</th>
+                </tr>
+                <tr>
+                    <td class="grade-5"><strong>5 (отлично)</strong></td>
+                    <td>Оба задания выполнены без ошибок, все пути написаны правильно, файлы созданы с верными именами</td>
+                    <td>Оба задания выполнены правильно, все маски использованы верно, структура логична, пути записаны без ошибок</td>
+                    <td>Оба задания выполнены полностью и правильно, структура логична и практична, пути верны, обоснование ясное</td>
+                </tr>
+                <tr>
+                    <td class="grade-4"><strong>4 (хорошо)</strong></td>
+                    <td>Задания выполнены, 1-2 небольших ошибки в записи путей или именах файлов</td>
+                    <td>Задания выполнены, небольшие погрешности в использовании масок или в записи путей</td>
+                    <td>Задания выполнены, есть небольшие неточности в расчётах или в организации структуры</td>
+                </tr>
+                <tr>
+                    <td class="grade-3"><strong>3 (удовлетворительно)</strong></td>
+                    <td>Выполнено одно задание полностью или оба с серьёзными ошибками в путях</td>
+                    <td>Выполнено одно задание или оба с ошибками в основных элементах структуры</td>
+                    <td>Основная идея заданий понята, но есть серьёзные ошибки в выполнении или обосновании</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>💡 <strong>Совет:</strong> При возникновении затруднений поднимите руку и попросите помощь учителя. Не спешите — внимательно читайте инструкции!</p>
+            <p style="margin-top: 10px;">Информатика, 7 класс | Тема: "Файлы и каталоги"</p>
+        </div>
+    </div>
+
+    <script>
+        function selectLevel(level) {
+            // Скрыть все уровни
+            document.querySelectorAll('.level-content').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Убрать активный класс со всех кнопок
+            document.querySelectorAll('.level-btn').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Показать выбранный уровень
+            document.getElementById('level' + level).classList.add('active');
+
+            // Активировать выбранную кнопку
+            event.target.closest('.level-btn').classList.add('active');
+
+            // Прокрутить к содержимому
+            document.querySelector('.content').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function checkLevel1() {
+            alert('✓ Отлично! Вы завершили задания Уровня 1.\n\nПокажите результаты учителю:\n✓ Папку "МойПорядок" с двумя файлами\n✓ Записанную информацию о пути к файлам\n\nУчитель проверит вашу работу и оценит.');
+        }
+
+        function checkLevel2() {
+            alert('✓ Отлично! Вы завершили задания Уровня 2.\n\nПокажите учителю:\n✓ Результаты трёх поисков (количество файлов)\n✓ Нарисованную схему структуры папок\n✓ Записанные полные пути\n\nУчитель проверит правильность путей и оценит.');
+        }
+
+        function checkLevel3() {
+            alert('✓ Отлично! Вы завершили задания Уровня 3.\n\nПокажите учителю:\n✓ Результаты поиска и анализа размеров файлов\n✓ Полное дерево структуры "Мои предметы"\n✓ Пять полных путей к файлам\n✓ Письменное обоснование структуры\n\nУчитель оценит сложность и логичность вашей структуры.');
+        }
+
+        function resetLevel1() {
+            alert('Сброс выполнен. Вы можете начать заново.');
+        }
+
+        function resetLevel2() {
+            alert('Сброс выполнен. Вы можете начать заново.');
+        }
+
+        function resetLevel3() {
+            alert('Сброс выполнен. Вы можете начать заново.');
+        }
+    </script>
+</body>
+</html>
